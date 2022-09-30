@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name='roo',
     version='0.1.0',
-    packages=['roommate_tools'],
+    packages=['roomieMatter'],
     include_package_data=True,
     install_requires=[
         'arrow',

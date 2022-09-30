@@ -3,4 +3,4 @@ git pull
 pip install -r requirements.txt
 pip install -e .
 pkill -f gunicorn
-gunicorn -b localhost:8000 -w 2 -D roommate_tools:app
+gunicorn -b localhost:8000 -w 2 -D roomieMatter:app

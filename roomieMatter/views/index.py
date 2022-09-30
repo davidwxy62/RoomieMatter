@@ -1,11 +1,11 @@
 """
-roommate tools index (main) view.
+roomieMatter index (main) view.
 URLs include:
 /
 """
 import flask
-import roommate_tools
-@roommate_tools.app.route('/')
+import roomieMatter
+@roomieMatter.app.route('/')
 def show_index():
     """Display / route."""
     context = {}
