@@ -1,0 +1,5 @@
+#!/bin/bash
+source env/bin/activate
+export FLASK_ENV=development
+export FLASK_APP=roomieMatter
+flask run --host 0.0.0.0 --port 8000
