@@ -1,2 +1,3 @@
 """Views, one for each roomieMatter page."""
-from roomieMatter.views.index import show_index
+import roomieMatter.views.index
+import roomieMatter.views.accounts

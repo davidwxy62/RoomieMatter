@@ -1,0 +1,40 @@
+#!/bin/bash
+# roomiedb
+# Stop on errors
+set -Eeuo pipefail
+# Sanity check command line options
+usage() {
+  echo "Usage: $0 (create|destroy|reset|dump)"
+}
+if [ $# -ne 1 ]; then
+  usage
+  exit 1
+fi
+# Parse argument.  $1 is the first argument
+case $1 in
+  "create")
+    FILE=var/roomieMatter.sqlite3
+    if [[ -e "$FILE" ]]; then
+      echo "Error: database "$FILE" already exists"
+      exit 0
+    fi
+    sqlite3 var/roomieMatter.sqlite3 < sql/schema.sql
+    # sqlite3 var/roomie.sqlite3 < sql/data.sql
+    ;;
+  "destroy")
+    rm -rf var/roomieMatter.sqlite3
+    ;;
+  "reset")
+    rm -rf var/roomieMatter.sqlite3
+    sqlite3 var/roomieMatter.sqlite3 < sql/schema.sql
+    # sqlite3 var/roomie.sqlite3 < sql/data.sql
+    ;;
+  "dump")
+    sqlite3 -batch -line var/roomieMatter.sqlite3 'SELECT * FROM users'
+    sqlite3 -batch -line var/roomieMatter.sqlite3 'SELECT * FROM roomies'
+    ;;
+  *)
+    usage
+    exit 1
+    ;;
+esac

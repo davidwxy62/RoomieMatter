@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RoomieMatter</title>
+<style>
+    h1 {
+        text-align: center;
+        margin-top: 25%;
+        font-family: avenir;
+        font-size: 50px;
+        color:white;
+    }
+
+    .cuteForm {
+        height: 30;
+        font-family: avenir;
+        font-size: 30px;
+        border-radius: 8px;
+    }
+    .button {
+        background-color: white;
+        border: none;
+        font-family: avenir;
+        font-weight: 800;
+        color: #0099ff;
+        padding: 10px 80px;
+        text-align: center;
+        display: inline-block;
+        font-size: 25px;
+        border-radius: 8px;
+    }
+</style>
+</head>
+<body style="background-color: #0099ff">
+    <div style="text-align: center">
+        <h1>Login</h1>
+        <form action="/accounts/?target=/" method="post" enctype="multipart/form-data">
+                <div>
+                    <input class="cuteForm" type="text" name="username" placeholder="Email" required/>
+                </div>
+                <div>
+                    <input class ="cuteForm" type="password" name="password" placeholder="Password" required/>
+                </div>
+                    <input class="button" type="submit" value="Login"/>
+                    <input type="hidden" name="operation" value="login"/>
+        </form>
+    </div>
+</body>
+</html>
