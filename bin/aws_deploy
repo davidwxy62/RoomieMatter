@@ -1,5 +1,3 @@
 #!/bin/bash
 pkill -f gunicorn
 gunicorn -b localhost:8000 -w 2 -D roomieMatter:app
-./bin/roomie_db destroy
-./bin/roomie_db create
