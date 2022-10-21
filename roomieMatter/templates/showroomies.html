@@ -3,12 +3,11 @@
     <head>
         <title>RoomieMatter</title>
         <style>
-            .large {
+            h1 {
                 text-align: center;
-                margin-top: 25%;
+                margin-top: 15%;
                 font-family: avenir;
                 font-size: 80px;
-                font-weight: 1000;
                 color:white;
             }
 
@@ -19,18 +18,25 @@
                 font-size: 30px;
             }
 
-            .center {
-                text-align: center;
+            .roomie {
                 font-family: avenir;
                 font-size: 30px;
                 color: white;
+                text-align: center;
             }
         </style>
     </head>
     <body style="background-color: #0099ff">
-        <a href="https://docs.google.com/presentation/d/172V2Z67Hw1hbHei56_m5pOsnYBS_34WVUlvM8qvmBPA/edit#slide=id.p"><p class="large">This Is RoomieMatter</p></a>
-        <a href="/signup"><p class="center">signup</p></a>
-        <a href="/login"><p class="center">login</p></a>
+        <h1>Ur Roomies</h1>
+            {% for roomie in roomies %}
+                <p class="roomie">
+                    {{roomie.username}}
+                    {{roomie.status}}
+                </p>
+            {% endfor %}
+            {% if not roomies %}
+                <p class="roomie">Go add some roomies!</p>
+            {% endif %}
     </body>
 </html>
 

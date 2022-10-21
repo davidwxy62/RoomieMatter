@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RoomieMatter</title>
+<style>
+    h1 {
+        text-align: center;
+        margin-top: 25%;
+        font-family: avenir;
+        font-size: 50px;
+        color:white;
+    }
+
+    .cuteForm {
+        height: 30;
+        font-family: avenir;
+        font-size: 30px;
+        border-radius: 8px;
+    }
+    .button {
+        background-color: white;
+        border: none;
+        font-family: avenir;
+        font-weight: 800;
+        color: #0099ff;
+        padding: 10px 80px;
+        text-align: center;
+        display: inline-block;
+        font-size: 25px;
+        border-radius: 8px;
+    }
+</style>
+</head>
+<body style="background-color: #0099ff">
+    <div style="text-align: center">
+        <h1>Create A Room!</h1>
+        <form action="/createroom" method="post" enctype="multipart/form-data">
+                <div>
+                    <input class="cuteForm" type="text" name="roomname" placeholder="Room Name" required/>
+                </div>
+                    <input class="button" type="submit" value="Create"/>
+        </form>
+    </div>
+</body>
+</html>

@@ -3,27 +3,54 @@
     <head>
         <title>RoomieMatter</title>
         <style>
-            h1 {
+            .main {
                 text-align: center;
                 margin-top: 25%;
                 font-family: avenir;
                 font-size: 80px;
                 color:white;
             }
-            .cuteForm {
+            .cuteButton {
                 text-align: center;
                 font-family: avenir;
-                font-size: 80px;
-                color:white;
+                border: none;
+                border-radius: 8px;
+                font-size: 30px;
+                font-weight: 1000;
+                color:#0099ff;
+                background-color: white;
+            }
+
+            .roomie {
+                font-family: avenir;
+                font-size: 30px;
+                color: white;
+                text-align: center;
+            }
+
+            .right {
+                text-align: right;
             }
         </style>
     </head>
     <body style="background-color: #0099ff">
-        <h1>Temp main page</h1>
-        <form class="cuteForm" action="/accounts/logout" method="post" enctype="multipart/form-data">
-            <input type="submit" name="delete" value="logout"/>
+        <form class="right" action="/accounts/logout" method="post" enctype="multipart/form-data">
+            <input class="cuteButton" type="submit" name="logout" value="logout"/>
         </form>
-
+        <!-- <form class="right" action="/addroomie" method="get" enctype="multipart/form-data">
+            <input class="cuteButton" type="submit" value="Add Roomie"/>
+        </form> -->
+        <h1 class="main">Ur Roomies</h1>
+            {% if not roomies %}
+                <p class="roomie">Go add some roomies!</p>
+            {% else %}
+                {% for roomie in roomies %}
+                    <p class="roomie">
+                        <span style="font-weight: 1000;">{{roomie.username}}</span>
+                        {{roomie.status}}
+                    </p>
+                {% endfor %}
+            {% endif %}
     </body>
 </html>
 

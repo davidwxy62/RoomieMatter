@@ -8,6 +8,7 @@ import roomieMatter
 from roomieMatter import db
 from roomieMatter.views import index
 
+
 @roomieMatter.app.route('/accounts/', methods=['POST'])
 def account_post():
     """Doc string."""
@@ -20,9 +21,10 @@ def account_post():
         flask.session['username'] = form['username']
 
     elif flask.request.form['operation'] == 'signup':
-        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         account_post_create(flask.request.form)
         flask.session['username'] = flask.request.form['username']
+        context = {}
+        return flask.render_template("newuser.html", **context)
 
     # elif flask.request.form['operation'] == 'delete':
     #     if 'username' not in flask.session:
@@ -47,9 +49,9 @@ def account_post():
     #         flask.request.form
     #     )
 
-    if not flask.request.args.get('target'):
-        return flask.redirect(flask.url_for('show_index'))
-    return flask.redirect(flask.request.args.get('target'))
+    # if not flask.request.args.get('target'):
+    return flask.redirect(flask.url_for('show_index'))
+    # return flask.redirect(flask.request.args.get('target'))
 
 
 @roomieMatter.app.route('/accounts/logout/', methods=['POST'])

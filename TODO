@@ -1,0 +1,10 @@
+Short Term - 
+seeRoomInvitationOrRequest endpoint
+changeStatus endpoint
+Page to view pending requests and buttons to remove them or to send a new request 
+
+
+
+Long Term - 
+Delete request feature to prevent spamming
+feature to generate temp random number for others to join rooms

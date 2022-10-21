@@ -22,6 +22,7 @@ def show_index():
     if not auth():
         return flask.redirect(flask.url_for('welcome'))
     context = {}
+    context["roomies"] = db.get_roomies_db(flask.session['username'])
     if flask.session.get("username", None) == "Abby":
         return flask.render_template("secret.html", **context)
     return flask.render_template("index.html", **context)
@@ -43,3 +44,59 @@ def welcome():
     """Welcome page"""
     context = {}
     return flask.render_template("welcome.html", **context)
+
+
+# @roomieMatter.app.route('/addroomie')
+# def addroomie():
+#     """Add a roomie."""
+#     if not auth():
+#         return flask.redirect(flask.url_for('welcome'))
+#     context = {}
+#     return flask.render_template("addroomie.html", **context)
+
+
+# @roomieMatter.app.route('/roomie', methods=['POST'])
+# def roomie():
+#     """Roomie operations."""
+#     if not auth():
+#         return flask.redirect(flask.url_for('welcome'))
+#     context = {}
+#     if flask.request.form['operation'] == 'add':
+#         form = flask.request.form
+#         if len(form['username']) == 0:
+#             flask.abort(400)
+#         if not db.add_roomie_db(flask.session['username'], form['username']):
+#             flask.abort(403)
+#     return flask.redirect(flask.url_for('show_index'))
+
+
+@roomieMatter.app.route('/request', methods=['GET', 'POST'])
+def request():
+    """Roomie requests."""
+    if not auth():
+        return flask.redirect(flask.url_for('welcome'))
+    context = {}
+    if flask.request.method == 'GET':
+        return flask.render_template("request.html", **context)
+    if flask.request.method == 'POST':
+        form = flask.request.form
+        roomname = form['roomname']
+        if db.request_db(flask.session['username'], roomname):
+            return flask.redirect(flask.url_for('show_index'))
+        return flask.redirect(flask.url_for('request'))
+
+
+@roomieMatter.app.route('/createroom', methods=['GET', 'POST'])
+def createroom():
+    """Create a room."""
+    if not auth():
+        return flask.redirect(flask.url_for('welcome'))
+    context = {}
+    if flask.request.method == 'GET':
+        return flask.render_template("createroom.html", **context)
+    if flask.request.method == 'POST':
+        form = flask.request.form
+        roomname = form['roomname']
+        if db.create_room_db(flask.session['username'], roomname):
+            return flask.redirect(flask.url_for('show_index'))
+        return flask.redirect(flask.url_for('createroom'))

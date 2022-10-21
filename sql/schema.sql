@@ -9,17 +9,39 @@ CREATE TABLE users
     "status" VARCHAR (20)
 );
 
+CREATE TABLE rooms
+(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    roomname VARCHAR(20) NOT NULL UNIQUE
+);
+
 CREATE TABLE roomies
 (
-    roomie1 INTEGER NOT NULL ,
-    roomie2 INTEGER NOT NULL ,
-    CONSTRAINT constrain1
-        FOREIGN KEY (roomie1)
-        REFERENCES users (id)
+    roomId INTEGER NOT NULL,
+    roomieId INTEGER NOT NULL UNIQUE,
+    CONSTRAINT room_fk
+        FOREIGN KEY (roomId)
+        REFERENCES  rooms (id)
         ON DELETE CASCADE,
-    CONSTRAINT constrain2
-        FOREIGN KEY (roomie2)
-        REFERENCES users (id)
+    CONSTRAINT roomie_fk
+        FOREIGN KEY (roomieId)
+        REFERENCES  users (id)
         ON DELETE CASCADE
 );
 
+CREATE TABLE requests
+(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    senderId INTEGER NOT NULL,
+    roomId INTEGER NOT NULL,
+    CONSTRAINT unique_pair
+        UNIQUE (senderId, roomId),
+    CONSTRAINT sender_fk
+        FOREIGN KEY (senderId)
+        REFERENCES  users (id)
+        ON DELETE CASCADE,
+    CONSTRAINT room_fk
+        FOREIGN KEY (roomId)
+        REFERENCES  rooms (id)
+        ON DELETE CASCADE
+);
