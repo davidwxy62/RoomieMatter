@@ -129,3 +129,6 @@ dmypy.json
 .pyre/
 
 AWS_ENTR_390_9_16_2022.pem
+
+/TODO
+/scrap.py

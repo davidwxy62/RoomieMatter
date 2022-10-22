@@ -23,8 +23,7 @@ def account_post():
     elif flask.request.form['operation'] == 'signup':
         account_post_create(flask.request.form)
         flask.session['username'] = flask.request.form['username']
-        context = {}
-        return flask.render_template("newuser.html", **context)
+        return flask.redirect(flask.url_for('show_index'))
 
     # elif flask.request.form['operation'] == 'delete':
     #     if 'username' not in flask.session:

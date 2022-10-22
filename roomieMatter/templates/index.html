@@ -2,47 +2,18 @@
 <html>
     <head>
         <title>RoomieMatter</title>
-        <style>
-            .main {
-                text-align: center;
-                margin-top: 25%;
-                font-family: avenir;
-                font-size: 80px;
-                color:white;
-            }
-            .cuteButton {
-                text-align: center;
-                font-family: avenir;
-                border: none;
-                border-radius: 8px;
-                font-size: 30px;
-                font-weight: 1000;
-                color:#0099ff;
-                background-color: white;
-            }
-
-            .roomie {
-                font-family: avenir;
-                font-size: 30px;
-                color: white;
-                text-align: center;
-            }
-
-            .right {
-                text-align: right;
-            }
-        </style>
+        <link rel="stylesheet" href="/static/css/style.css">
     </head>
+    
     <body style="background-color: #0099ff">
-        <form class="right" action="/accounts/logout" method="post" enctype="multipart/form-data">
-            <input class="cuteButton" type="submit" name="logout" value="logout"/>
+        <a href="/"><p class="logo">RoomieMatter</p></a>
+        <form class="top_right" action="/accounts/logout" method="post" enctype="multipart/form-data">
+            <input class="logout" type="submit" name="logout" value="logout"/>
         </form>
-        <!-- <form class="right" action="/addroomie" method="get" enctype="multipart/form-data">
-            <input class="cuteButton" type="submit" value="Add Roomie"/>
-        </form> -->
-        <h1 class="main">Ur Roomies</h1>
+        {% if joined %}
+            <p class="main80">Ur Roomies</p>
             {% if not roomies %}
-                <p class="roomie">Go add some roomies!</p>
+                <p class="roomie">Go get some roomies!</p>
             {% else %}
                 {% for roomie in roomies %}
                     <p class="roomie">
@@ -51,6 +22,11 @@
                     </p>
                 {% endfor %}
             {% endif %}
+        {% else %}
+            <a href="/request" style="text-decoration: none;"><p class="main80" style="margin-top: 22%;">Request to join a room</p></a>
+            <a href="/createroom" style="text-decoration: none;"><p class="main80" style="margin-top: 30px;">Create a room</p></a>
+        {% endif %}
+        <p class="bottom_left cuteFont_small">feedbacks plz: davidwxy@umich.edu</p>
     </body>
 </html>
 

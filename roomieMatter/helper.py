@@ -8,7 +8,6 @@ from roomieMatter import db
 
 def loggedIn(cookie, auth_obj):
     """Help with both cookie and HTTP basic authorization."""
-    print(cookie)
     if cookie:
         return True
 

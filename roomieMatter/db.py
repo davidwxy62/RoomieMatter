@@ -102,9 +102,7 @@ def request_db(username, roomname):
         (username, )
     )
     user = cur.fetchone()
-    print(user)
     if not user:
-        print(1)
         return None
     cur = connection.execute(
         "SELECT id "
@@ -114,7 +112,6 @@ def request_db(username, roomname):
     )
     room = cur.fetchone()
     if not room:
-        print(2)
         return None
     try:
         connection.execute(
@@ -124,7 +121,6 @@ def request_db(username, roomname):
         )
         return room['id']
     except:
-        print(3)
         return None
 
 
@@ -156,9 +152,34 @@ def get_roomies_db(username):
         "SELECT username, status "
         "FROM roomies INNER JOIN users "
         "ON roomies.roomieId = users.id "
-        "WHERE roomId = ? AND username != ? ",
-        (room['roomId'], username)
+        "WHERE roomId = ?",
+        (room['roomId'],)
     )
     roomies = cur.fetchall()
-    print(roomies)
     return roomies
+
+
+def is_joined_db(username):
+    """Check if a user is in a room."""
+    connection = get_db()
+
+    cur = connection.execute(
+        "SELECT id "
+        "FROM users "
+        "WHERE username = ? ",
+        (username, )
+    )
+    user = cur.fetchone()
+    if not user:
+        return False
+    
+    cur = connection.execute(
+        "SELECT roomId "
+        "FROM roomies "
+        "WHERE roomieId = ? ",
+        (user['id'], )
+    )
+    room = cur.fetchone()
+    if not room:
+        return False
+    return True

@@ -1,0 +1,108 @@
+.main80 {
+    text-align: center;
+    margin-top: 25%;
+    font-family: avenir;
+    font-size: 80px;
+    font-weight: 1000;
+    color:white;
+}
+
+.main50 {
+    text-align: center;
+    margin-top: 25%;
+    font-family: avenir;
+    font-size: 50px;
+    font-weight: 1000;
+    color:white;
+}
+
+.logout {
+    text-align: center;
+    font-family: avenir;
+    border: none;
+    border-radius: 8px;
+    font-size: 30px;
+    font-weight: 1000;
+    color:#0099ff;
+    background-color: white;
+}
+
+.cuteButton {
+    background-color: white;
+    border: none;
+    font-family: avenir;
+    font-weight: 800;
+    color: #0099ff;
+    padding: 10px 80px;
+    text-align: center;
+    display: inline-block;
+    font-size: 25px;
+    border-radius: 8px;
+}
+
+.roomie {
+    font-family: avenir;
+    font-size: 30px;
+    color: white;
+    text-align: center;
+}
+
+.top_right {
+    position: absolute;
+    top: 32px;
+    right: 16px;
+    font-size: 18px;
+}
+
+.logo {
+    position: absolute;
+    top: 8px;
+    left: 16px;
+    font-weight: 1000;
+    font-size: 30px;
+    color: white;
+    font-family: Impact;
+}
+
+.cuteForm {
+    height: 30;
+    font-family: avenir;
+    font-size: 30px;
+    border-radius: 8px;
+}
+
+.alert {
+    font-size: 20px;
+    margin-top: 30px;
+    text-align: center;
+    font-family: avenir;
+    color:white;
+    font-weight: 2000;
+}
+
+.center {
+    text-align: center;
+    margin-top: 20px;
+    font-family: avenir;
+    font-size: 35px;
+    font-weight: 1000;
+    color:white;
+}
+
+a {
+    text-decoration: none;
+}
+
+.bottom_left {
+    position: absolute;
+    bottom: 32px;
+    left: 16px;
+    font-size: 18px;
+}
+
+.cuteFont_small {
+    font-family: avenir;
+    font-size: 15px;
+    font-weight: 1000;
+    color:white;
+}
