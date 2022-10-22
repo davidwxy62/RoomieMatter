@@ -66,7 +66,7 @@ def account_post_create(form):
         flask.abort(400)
     pwd = form["password1"]
     try:
-        already_exists = db.create_user_db(form['username'], form['email'], pwd)
+        already_exists = db.create_user_db(form['username'], form['name'], form['email'], pwd)
         if already_exists:
             flask.abort(409)
     except KeyError:

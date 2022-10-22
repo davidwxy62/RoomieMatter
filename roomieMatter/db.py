@@ -23,7 +23,7 @@ def username_pwd_match(username, pwd):
         return user['password'] == pwd
     return False
 
-def create_user_db(username, email, pwd):
+def create_user_db(username, name, email, pwd):
     """
     Create a new user in the database.
 
@@ -49,9 +49,9 @@ def create_user_db(username, email, pwd):
     try:
         connection.execute(
             "INSERT INTO users "
-            "(username, email, password, status) "
-            "VALUES (?, ?, ?, ?)",
-            (username, email, pwd, 'none')
+            "(username, name, email, password, status) "
+            "VALUES (?, ?, ?, ?, ?)",
+            (username, name, email, pwd, 'active')
         )
         return False
     except:
@@ -149,7 +149,7 @@ def get_roomies_db(username):
         return None
 
     cur = connection.execute(
-        "SELECT username, status "
+        "SELECT name, status "
         "FROM roomies INNER JOIN users "
         "ON roomies.roomieId = users.id "
         "WHERE roomId = ?",
@@ -183,3 +183,19 @@ def is_joined_db(username):
     if not room:
         return False
     return True
+
+
+def get_name_db(username):
+    """Get the name of a user."""
+    connection = get_db()
+
+    cur = connection.execute(
+        "SELECT name "
+        "FROM users "
+        "WHERE username = ? ",
+        (username, )
+    )
+    user = cur.fetchone()
+    if not user:
+        return None
+    return user['name']

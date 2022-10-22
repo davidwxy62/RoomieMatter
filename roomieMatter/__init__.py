@@ -17,3 +17,4 @@ app.config.from_envvar('ROOMIEMATTER_SETTINGS', silent=True)
 # going to tell pylint and pycodestyle to ignore this coding style violation.
 import roomieMatter.views  # noqa: E402  pylint: disable=wrong-import-position
 import roomieMatter.model  # noqa: E402  pylint: disable=wrong-import-position
+import roomieMatter.api  # noqa: E402  pylint: disable=wrong-import-position

@@ -25,17 +25,19 @@ def show_index():
     context["username"] = flask.session['username']
     context['joined'] = db.is_joined_db(flask.session['username'])
     if context['joined']:
+        name = db.get_name_db(flask.session['username'])
         context["roomies"] = db.get_roomies_db(flask.session['username'])
-    if flask.session.get("username", None) == "Abby":
+        user_status = ''
+        for d in context['roomies']:
+            print(d)
+            if d['name'] == name:
+                user_status = d['status']
+        user_dict = {'name': name, 'status': user_status}
+        context['roomies'].remove(user_dict)
+        context['roomies'].sort(key=lambda x: x['name'])
+        context['roomies'] = [user_dict] + context['roomies']
+    if flask.session.get("username", None) == "mh988":
         return flask.render_template("secret.html", **context)
-    user_status = ''
-    for d in context['roomies']:
-        if d['username'] == flask.session['username']:
-            user_status = d['status']
-    user_dict = {'username': flask.session['username'], 'status': user_status}
-    context['roomies'].remove(user_dict)
-    context['roomies'].sort(key=lambda x: x['username'])
-    context['roomies'] = [user_dict] + context['roomies']
     return flask.render_template("index.html", **context)
 
 @roomieMatter.app.route('/login')
@@ -63,6 +65,7 @@ def request():
     if not auth():
         return flask.redirect(flask.url_for('welcome'))
     context = {}
+    context["username"] = flask.session['username']
     if flask.request.method == 'GET':
         return flask.render_template("request.html", **context)
     if flask.request.method == 'POST':
@@ -80,6 +83,7 @@ def createroom():
         return flask.redirect(flask.url_for('welcome'))
     context = {}
     if flask.request.method == 'GET':
+        context["username"] = flask.session['username']
         return flask.render_template("createroom.html", **context)
     if flask.request.method == 'POST':
         form = flask.request.form

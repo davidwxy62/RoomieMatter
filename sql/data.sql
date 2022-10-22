@@ -1,18 +1,18 @@
 INSERT INTO users 
-(username, email, password, status) 
-VALUES ("Abby", "abby@email.com", "abby12345", "active");
+(username, "name", email, password, status) 
+VALUES ("mh988", "Abby", "abby@email.com", "abby12345", "active");
 
 INSERT INTO users
-(username, email, password, status)
-VALUES ("David", "david@email.com", "david12345", "active");
+(username, "name", email, password, status)
+VALUES ("davidwxy","David", "david@email.com", "david12345", "active");
 
 INSERT INTO users
-(username, email, password, status)
-VALUES ("Mie", "mie@email.com", "mie12345", "active");
+(username, "name", email, password, status)
+VALUES ("xxy", "Mie", "mie@email.com", "mie12345", "active");
 
 INSERT INTO users
-(username, email, password, status)
-VALUES ("huiTaiLang", "htl@email.com", "htl12345", "active");
+(username, "name", email, password, status)
+VALUES ("wolfwolf", "huiTaiLang", "htl@email.com", "htl12345", "active");
 
 INSERT INTO rooms
 (roomname)

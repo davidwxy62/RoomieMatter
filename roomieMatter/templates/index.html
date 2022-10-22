@@ -10,14 +10,15 @@
         <form class="top_right" action="/accounts/logout" method="post" enctype="multipart/form-data">
             <input class="logout" type="submit" name="logout" value="logout"/>
         </form>
+        <p class="cuteFont_medium" style="text-align: right">{{username}}</p>
         {% if joined %}
-            <p class="main80">Ur Roomies</p>
+            <p class="main80" style="margin-top: 20%">Ur Roomies</p>
             {% if not roomies %}
                 <p class="roomie">Go get some roomies!</p>
             {% else %}
                 {% for roomie in roomies %}
                     <p class="roomie">
-                        <span style="font-weight: 1000;">{{roomie.username}}</span>
+                        <span style="font-weight: 1000;">{{roomie.name}}</span> -
                         {{roomie.status}}
                     </p>
                 {% endfor %}
