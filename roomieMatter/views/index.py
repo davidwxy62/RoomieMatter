@@ -29,13 +29,9 @@ def show_index():
         context["roomies"] = db.get_roomies_db(flask.session['username'])
         user_status = ''
         for d in context['roomies']:
-            print(d)
             if d['name'] == name:
                 user_status = d['status']
-        user_dict = {'name': name, 'status': user_status}
-        context['roomies'].remove(user_dict)
         context['roomies'].sort(key=lambda x: x['name'])
-        context['roomies'] = [user_dict] + context['roomies']
     if flask.session.get("username", None) == "mh988":
         return flask.render_template("secret.html", **context)
     return flask.render_template("index.html", **context)

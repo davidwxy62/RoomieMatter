@@ -11,8 +11,11 @@
             <input class="logout" type="submit" name="logout" value="logout"/>
         </form>
         <p class="cuteFont_medium" style="text-align: right">{{username}}</p>
+        <div style="text-align: center;" id="reactEntry" style="margin-top: 20%">
+        </div>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/bundle.js') }}"></script>
         {% if joined %}
-            <p class="main80" style="margin-top: 20%">Ur Roomies</p>
+            <p class="main50" style="margin-top: 50px">Your Roomies:</p>
             {% if not roomies %}
                 <p class="roomie">Go get some roomies!</p>
             {% else %}

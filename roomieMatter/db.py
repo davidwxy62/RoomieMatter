@@ -152,8 +152,8 @@ def get_roomies_db(username):
         "SELECT name, status "
         "FROM roomies INNER JOIN users "
         "ON roomies.roomieId = users.id "
-        "WHERE roomId = ?",
-        (room['roomId'],)
+        "WHERE roomId = ? AND roomieId != ?",
+        (room['roomId'], user['id'])
     )
     roomies = cur.fetchall()
     return roomies
@@ -199,3 +199,52 @@ def get_name_db(username):
     if not user:
         return None
     return user['name']
+
+
+def get_status_db(username):
+    """Get the status of a user."""
+    connection = get_db()
+
+    cur = connection.execute(
+        "SELECT status "
+        "FROM users "
+        "WHERE username = ? ",
+        (username, )
+    )
+    user = cur.fetchone()
+    if not user:
+        return None
+    return user['status']
+
+
+def change_status_db(username):
+    """Change the status of a user."""
+    connection = get_db()
+
+    cur = connection.execute(
+        "SELECT status "
+        "FROM users "
+        "WHERE username = ? ",
+        (username, )
+    )
+    user = cur.fetchone()
+    if not user:
+        return None
+    if user['status'] == 'active':
+        connection.execute(
+            "UPDATE users "
+            "SET status = 'quiet' "
+            "WHERE username = ?",
+            (username, )
+        )
+    else:
+        connection.execute(
+            "UPDATE users "
+            "SET status = 'active' "
+            "WHERE username = ?",
+            (username, )
+        )
+    if user['status'] == 'active':
+        return 'quiet'
+    else:
+        return 'active'
