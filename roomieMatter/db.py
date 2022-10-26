@@ -248,3 +248,144 @@ def change_status_db(username):
         return 'quiet'
     else:
         return 'active'
+
+
+def has_pending_requests_db(username):
+    """Check if a user has pending requests."""
+    connection = get_db()
+
+    cur = connection.execute(
+        "SELECT id "
+        "FROM users "
+        "WHERE username = ? ",
+        (username, )
+    )
+    user = cur.fetchone()
+    if not user:
+        return False
+    
+    cur = connection.execute(
+        "SELECT roomId "
+        "FROM roomies "
+        "WHERE roomieId = ? ",
+        (user['id'], )
+    )
+    room = cur.fetchone()
+    if not room:
+        return False
+
+    cur = connection.execute(
+        "SELECT senderId "
+        "FROM requests "
+        "WHERE roomId = ? ",
+        (room['roomId'], )
+    )
+    request = cur.fetchone()
+    if not request:
+        return False
+    return True
+
+
+def delete_pending_requests_db(username, sender_id):
+    """Delete a pending request."""
+    connection = get_db()
+
+    cur = connection.execute(
+        "SELECT id "
+        "FROM users "
+        "WHERE username = ? ",
+        (username, )
+    )
+    user = cur.fetchone()
+    if not user:
+        return False
+    
+    cur = connection.execute(
+        "SELECT roomId "
+        "FROM roomies "
+        "WHERE roomieId = ? ",
+        (user['id'], )
+    )
+    room = cur.fetchone()
+    if not room:
+        return False
+
+    try:
+        connection.execute(
+            "DELETE FROM requests "
+            "WHERE roomId = ? AND senderId = ?",
+            (room['roomId'], sender_id)
+        )
+        return True
+    except:
+        return False
+
+
+def get_pending_requests_db(username):
+    """Get all pending requests."""
+    connection = get_db()
+
+    cur = connection.execute(
+        "SELECT id "
+        "FROM users "
+        "WHERE username = ? ",
+        (username, )
+    )
+    user = cur.fetchone()
+    if not user:
+        return None
+    
+    cur = connection.execute(
+        "SELECT roomId "
+        "FROM roomies "
+        "WHERE roomieId = ? ",
+        (user['id'], )
+    )
+    room = cur.fetchone()
+    if not room:
+        return None
+
+    cur = connection.execute(
+        "SELECT name, senderId "
+        "FROM requests INNER JOIN users "
+        "ON requests.senderId = users.id "
+        "WHERE roomId = ?",
+        (room['roomId'], )
+    )
+    requests = cur.fetchall()
+    return requests
+
+
+def add_roomie_db(username, sender_id):
+    """Add a roomie to a room."""
+    connection = get_db()
+
+    cur = connection.execute(
+        "SELECT id "
+        "FROM users "
+        "WHERE username = ? ",
+        (username, )
+    )
+    user = cur.fetchone()
+    if not user:
+        return False
+    
+    cur = connection.execute(
+        "SELECT roomId "
+        "FROM roomies "
+        "WHERE roomieId = ? ",
+        (user['id'], )
+    )
+    room = cur.fetchone()
+    if not room:
+        return False
+
+    try:
+        connection.execute(
+            "INSERT INTO roomies (roomId, roomieId) "
+            "VALUES (?, ?)",
+            (room['roomId'], sender_id)
+        )
+        return True
+    except:
+        return False

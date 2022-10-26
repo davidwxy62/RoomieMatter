@@ -26,10 +26,6 @@ INSERT INTO roomies
 (roomId, roomieId)
 VALUES (1, 2);
 
-INSERT INTO roomies
-(roomId, roomieId)
-VALUES (1, 3);
-
 INSERT INTO requests
 (senderId, roomId)
 VALUES (3, 1);

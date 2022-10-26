@@ -130,3 +130,20 @@ a {
 .margin_top_20 {
     margin-top: 20%;
 }
+
+.cuteButton_small {
+    background-color: white;
+    border: none;
+    font-family: avenir;
+    font-weight: 800;
+    color: #0099ff;
+    padding: 4px 20px;
+    text-align: center;
+    display: inline-block;
+    font-size: 25px;
+    border-radius: 8px;
+}
+
+ul {
+    list-style-type: none;
+}

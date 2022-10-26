@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>RoomieMatter</title>
+        <link rel="stylesheet" href="/static/css/style.css">
+    </head>
+    
+    <body style="background-color: #0099ff">
+        <a href="/"><p class="logo">RoomieMatter</p></a>
+        <form class="top_right" action="/accounts/logout" method="post" enctype="multipart/form-data">
+            <input class="logout" type="submit" name="logout" value="logout"/>
+        </form>
+        <p class="cuteFont_medium" style="text-align: right">{{username}}</p>
+        <div style="text-align: center;" id="reactEntry_pendingRequests" style="margin-top: 20%">
+        </div>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/bundle.js') }}"></script>
+        <p class="bottom_left cuteFont_small">feedbacks plz: davidwxy@umich.edu</p>
+    </body>
+</html>
+

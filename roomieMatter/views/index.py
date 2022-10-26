@@ -32,6 +32,7 @@ def show_index():
             if d['name'] == name:
                 user_status = d['status']
         context['roomies'].sort(key=lambda x: x['name'])
+    context["has_pending_requests"] = db.has_pending_requests_db(flask.session['username'])
     if flask.session.get("username", None) == "mh988":
         return flask.render_template("secret.html", **context)
     return flask.render_template("index.html", **context)
@@ -87,3 +88,13 @@ def createroom():
         if db.create_room_db(flask.session['username'], roomname):
             return flask.redirect(flask.url_for('show_index'))
         return flask.redirect(flask.url_for('createroom'))
+
+
+@roomieMatter.app.route('/viewrequests')
+def viewrequests():
+    """View roomie requests."""
+    if not auth():
+        return flask.redirect(flask.url_for('welcome'))
+    context = {}
+    context["username"] = flask.session['username']
+    return flask.render_template("viewrequests.html", **context)
