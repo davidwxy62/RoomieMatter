@@ -67,7 +67,7 @@ class RoomieList extends React.Component {
     }
 
     fetchData(focusRequired = false) {
-        if (!focusRequired && document.hasFocus()) {
+        // if (!focusRequired && document.hasFocus()) {
             fetch(this.props.url)
             .then((res) => res.json())
             .then(
@@ -97,7 +97,7 @@ class RoomieList extends React.Component {
                     }
                 }
             );
-        }
+        // }
     }
             
     notifContent(new_arr, old_arr) {
