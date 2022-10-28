@@ -152,6 +152,6 @@ a {
     border-radius: 8px;
 }
 
-ul {
-    list-style-type: none;
+li {
+    list-style: none;
 }

@@ -12,15 +12,15 @@
             <input class="logout" type="submit" name="logout" value="logout"/>
         </form>
         <p class="cuteFont_medium" style="text-align: right">{{username}}</p>
+        {% if joined %}
+        <div style="text-align: center;" id="reactEntry_indexPage" style="margin-top: 20%"></div>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/bundle.js') }}"></script>
         {% if has_pending_requests %}
             <a href="/viewrequests"><p class="main50" 
                 style="margin-top: 50px; font-size: 30px; text-decoration: underline;">
                 View Join Requests</p>
             </a>
         {% endif %}
-        {% if joined %}
-            <div style="text-align: center;" id="reactEntry_indexPage" style="margin-top: 20%"></div>
-            <script type="text/javascript" src="{{ url_for('static', filename='js/bundle.js') }}"></script>
         {% else %}
             <a href="/request" style="text-decoration: none;"><p class="main80" style="margin-top: 22%;">Request to join a room</p></a>
             <a href="/createroom" style="text-decoration: none;"><p class="main80" style="margin-top: 30px;">Create a room</p></a>

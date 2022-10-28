@@ -138,15 +138,11 @@ class RoomieList extends React.Component {
             return (<p className="roomie">Go get some roomies!</p>);
         }
         return (
-            <ul className="center">
-                {roomies.map((roomie) => (
-                    <li key={roomie.name}>
-                        <p className="roomie">
-                        <span className="fontWeight1000">{roomie.name}</span> - {roomie.status}
-                        </p>
-                    </li>
-                ))}
-            </ul>
+                roomies.map((roomie) => (
+                        <li key={roomie.name}>
+                            <span className="roomie center fontWeight1000">{roomie.name} - {roomie.status}</span>
+                        </li>
+                ))
         );
     }
 }

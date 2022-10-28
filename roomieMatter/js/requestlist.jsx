@@ -1,5 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
+// import { useNavigate } from "react-router-dom";
+
+// class Redirect extends React.Component {
+//     constructor(props) {
+//         super(props);
+//     }
+
+//     componentDidMount() {
+//         window.location.href = this.props.to;
+//     }
+
+//     render() {
+//         return null;
+//     }
+// }
+
 
 function Request({name, onAccept, onReject}) {
     return (
@@ -48,6 +64,9 @@ class RequestList extends React.Component {
             this.setState((prevState) => ({
                 requests: prevState.requests.filter((request) => request.senderId !== senderId),
             }));
+            if (this.state.requests.length === 0) {
+                window.location.href = "/";
+            }
         }});
     }
 
@@ -65,25 +84,29 @@ class RequestList extends React.Component {
             this.setState((prevState) => ({
                 requests: prevState.requests.filter((request) => request.senderId !== senderId),
             }));
+            if (this.state.requests.length === 0) {
+                window.location.href = "/";
+            }
         }});
     }
 
     render() {
+        const { requests } = this.state;
+        // if (requests.length === 0) {
+        //     return (
+        //         <Redirect to='/'/>
+        //     );
+        // }
         return (
-            <div className="margin_top_20">
-                <span className="main50">Pending Requests: </span>
-                <ul>
-                    {this.state.requests.map((request) => (
-                        <li key={request.senderId}>
-                            <Request 
-                            name={request.name}
-                            onAccept={() => this.handleAccept(request.senderId)}
-                            onReject={() => this.handleReject(request.senderId)}
-                            />
-                        </li>
-                    ))}
-                </ul>
-            </div>
+                requests.map((request) => (
+                    <li key={requests.senderId}>
+                        <Request 
+                        name={request.name}
+                        onAccept={() => this.handleAccept(request.senderId)}
+                        onReject={() => this.handleReject(request.senderId)}
+                        />
+                    </li>
+                ))
         );
     }
 }
