@@ -62,7 +62,7 @@ class RoomieList extends React.Component {
             Notification.requestPermission();
         }
         this.fetchData();
-        setInterval(this.fetchData, 1000); // Make it slower later so server doesn't get overloaded
+        setInterval(this.fetchData, 10000); // Make it slower later so server doesn't get overloaded
     }
 
     fetchData() {
@@ -139,8 +139,8 @@ class RoomieList extends React.Component {
         }
         return (
                 roomies.map((roomie) => (
-                        <li key={roomie.name}>
-                            <span className="roomie center fontWeight1000">{roomie.name} - {roomie.status}</span>
+                        <li key={roomie.name} className="center roomie fontWeight1000">
+                            <span>{roomie.name} - {roomie.status}</span>
                         </li>
                 ))
         );

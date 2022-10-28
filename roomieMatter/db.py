@@ -373,3 +373,40 @@ def add_roomie_db(username, sender_id):
         return True
     except:
         return False
+
+
+def get_roomname_db(username):
+    """Get the room of a user."""
+    connection = get_db()
+
+    cur = connection.execute(
+        "SELECT id "
+        "FROM users "
+        "WHERE username = ? ",
+        (username, )
+    )
+    user = cur.fetchone()
+    if not user:
+        return None
+    
+    cur = connection.execute(
+        "SELECT roomId "
+        "FROM roomies "
+        "WHERE roomieId = ? ",
+        (user['id'], )
+    )
+    room = cur.fetchone()
+    if not room:
+        return None
+
+    cur = connection.execute(
+        "SELECT roomname "
+        "FROM rooms "
+        "WHERE id = ?",
+        (room['roomId'], )
+    )
+    roomname = cur.fetchone()
+    if not roomname:
+        return None
+
+    return roomname['roomname']

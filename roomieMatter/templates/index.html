@@ -11,15 +11,15 @@
         <form class="top_right" action="/accounts/logout" method="post" enctype="multipart/form-data">
             <input class="logout" type="submit" name="logout" value="logout"/>
         </form>
-        <p class="cuteFont_medium" style="text-align: right">{{username}}</p>
+        <p class="cuteFont_medium" style="text-align: right; margin-bottom: 0px;">{{username}}</p>
+        <p class="cuteFont_medium" style="text-align: right; margin-top:0px;">{{roomname}}</p>
         {% if joined %}
         <div style="text-align: center;" id="reactEntry_indexPage" style="margin-top: 20%"></div>
         <script type="text/javascript" src="{{ url_for('static', filename='js/bundle.js') }}"></script>
         {% if has_pending_requests %}
-            <a href="/viewrequests"><p class="main50" 
-                style="margin-top: 50px; font-size: 30px; text-decoration: underline;">
-                View Join Requests</p>
-            </a>
+            <form class="center" action="/viewrequests" method="get" enctype="multipart/form-data" style="margin-top: 30px">
+                <input class="cuteButton" type="submit" name="view" value="View Join Requests"/>
+            </form>
         {% endif %}
         {% else %}
             <a href="/request" style="text-decoration: none;"><p class="main80" style="margin-top: 22%;">Request to join a room</p></a>
