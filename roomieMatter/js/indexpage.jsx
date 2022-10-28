@@ -63,11 +63,11 @@ class RoomieList extends React.Component {
             Notification.requestPermission();
         }
         this.fetchData();
-        setInterval(this.fetchData, 10000); // Make it slower later so server doesn't get overloaded
+        setInterval(() => this.fetchData(true), 10000); // Make it slower later so server doesn't get overloaded
     }
 
-    fetchData() {
-        if (document.hasFocus()) {
+    fetchData(focusRequired = false) {
+        if (!focusRequired && document.hasFocus()) {
             fetch(this.props.url)
             .then((res) => res.json())
             .then(
@@ -76,7 +76,6 @@ class RoomieList extends React.Component {
                         roomies: data.roomies,
                         mounted: true,
                     });
-                    console.log("mounted")
                     const { roomies } = this.state;
                     let notif = this.notifContent(data.roomies, roomies);              
                     if (Object.keys(notif).length > 0) { // There are notifications
