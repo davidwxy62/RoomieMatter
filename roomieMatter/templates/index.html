@@ -21,18 +21,6 @@
         {% if joined %}
             <div style="text-align: center;" id="reactEntry_indexPage" style="margin-top: 20%"></div>
             <script type="text/javascript" src="{{ url_for('static', filename='js/bundle.js') }}"></script>
-            <!-- <p class="main80" style="margin-top: 30px">Your Roomies:</p> -->
-            <!-- {% if not roomies %}
-                <p class="roomie">Go get some roomies!</p>
-                {% else %} -->
-                <!-- <div style="text-align: center;" id="reactEntry_roomies"></div> -->
-        <!-- {% for roomie in roomies %}
-                    <p class="roomie">
-                        <span style="font-weight: 1000;">{{roomie.name}}</span> -
-                        {{roomie.status}}
-                    </p>
-                {% endfor %} -->
-            <!-- {% endif %} -->
         {% else %}
             <a href="/request" style="text-decoration: none;"><p class="main80" style="margin-top: 22%;">Request to join a room</p></a>
             <a href="/createroom" style="text-decoration: none;"><p class="main80" style="margin-top: 30px;">Create a room</p></a>
