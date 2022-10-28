@@ -24,14 +24,6 @@ def show_index():
     context = {}
     context["username"] = flask.session['username']
     context['joined'] = db.is_joined_db(flask.session['username'])
-    if context['joined']:
-        name = db.get_name_db(flask.session['username'])
-        # context["roomies"] = db.get_roomies_db(flask.session['username']) //remove
-        user_status = ''
-        # for d in context['roomies']:
-        #     if d['name'] == name:
-        #         user_status = d['status']
-        # context['roomies'].sort(key=lambda x: x['name'])
     context["has_pending_requests"] = db.has_pending_requests_db(flask.session['username'])
     if flask.session.get("username", None) == "mh988":
         return flask.render_template("secret.html", **context)

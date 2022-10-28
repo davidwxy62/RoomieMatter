@@ -156,6 +156,7 @@ def get_roomies_db(username):
         (room['roomId'], user['id'])
     )
     roomies = cur.fetchall()
+    roomies.sort(key=lambda x: x['name'])
     return roomies
 
 
