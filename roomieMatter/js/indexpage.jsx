@@ -76,6 +76,7 @@ class RoomieList extends React.Component {
                         roomies: data.roomies,
                         mounted: true,
                     });
+                    console.log("mounted")
                     const { roomies } = this.state;
                     let notif = this.notifContent(data.roomies, roomies);              
                     if (Object.keys(notif).length > 0) { // There are notifications
