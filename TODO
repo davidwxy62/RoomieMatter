@@ -1,10 +1,8 @@
 Short Term - 
     URGENT - enable server push requests
     Remove roomies
-    Show room name somewhere
     change user profile
     quit room
-    redirect to index page when there's no more requests
     Have buttons as react components so no forbidden messages
     Throw error when roomies in the same room have the same name
 

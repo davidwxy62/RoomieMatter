@@ -2,19 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 // import { useNavigate } from "react-router-dom";
 
-// class Redirect extends React.Component {
-//     constructor(props) {
-//         super(props);
-//     }
+class Redirect extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
-//     componentDidMount() {
-//         window.location.href = this.props.to;
-//     }
+    componentDidMount() {
+        window.location.href = this.props.to;
+    }
 
-//     render() {
-//         return null;
-//     }
-// }
+    render() {
+        return null;
+    }
+}
 
 
 function Request({name, onAccept, onReject}) {
@@ -32,6 +32,7 @@ class RequestList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            mounted: false,
             requests: [],
         };
         this.handleAccept = this.handleAccept.bind(this);
@@ -44,6 +45,7 @@ class RequestList extends React.Component {
         .then(
             (data) => {
             this.setState({
+                mounted: true,
                 requests: data.requests,
             });
             },
@@ -64,9 +66,6 @@ class RequestList extends React.Component {
             this.setState((prevState) => ({
                 requests: prevState.requests.filter((request) => request.senderId !== senderId),
             }));
-            if (this.state.requests.length === 0) {
-                window.location.href = "/";
-            }
         }});
     }
 
@@ -84,19 +83,16 @@ class RequestList extends React.Component {
             this.setState((prevState) => ({
                 requests: prevState.requests.filter((request) => request.senderId !== senderId),
             }));
-            if (this.state.requests.length === 0) {
-                window.location.href = "/";
-            }
         }});
     }
 
     render() {
-        const { requests } = this.state;
-        // if (requests.length === 0) {
-        //     return (
-        //         <Redirect to='/'/>
-        //     );
-        // }
+        const { mounted, requests } = this.state;
+        if (mounted && requests.length === 0) {
+            return (
+                <Redirect to='/'/>
+            );
+        }
         return (
                 requests.map((request) => (
                     <li key={requests.senderId}>
