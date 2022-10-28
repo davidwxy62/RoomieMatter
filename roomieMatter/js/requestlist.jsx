@@ -26,9 +26,9 @@ class RequestList extends React.Component {
         fetch(this.props.url)
         .then((res) => res.json())
         .then(
-            (result) => {
+            (data) => {
             this.setState({
-                requests: result.requests,
+                requests: data.requests,
             });
             },
         );
@@ -90,5 +90,5 @@ class RequestList extends React.Component {
 
 RequestList.propTypes = {
     url: PropTypes.string.isRequired,
-    };
+};
 export default RequestList;

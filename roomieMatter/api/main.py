@@ -40,3 +40,20 @@ def pendingRequests():
         print(db.delete_pending_requests_db(flask.session["username"], form['senderId']))
         context["senderId"] = form['senderId']
         return flask.jsonify(**context)
+
+
+@roomieMatter.app.route('/api/roomies', methods=['GET', 'DELETE'])
+def roomies():
+    if not index.auth():
+        return flask.Response(status=401)
+    context = {}
+    if flask.request.method == 'GET':
+        context["roomies"] = db.get_roomies_db(flask.session["username"])
+        return flask.jsonify(**context)
+
+    # Do it later
+    # elif flask.request.method == 'DELETE':
+    #     form = json.loads(flask.request.data)
+    #     db.delete_roomie_db(flask.session["username"], form['roomieId'])
+    #     context["roomieId"] = form['roomieId']
+    #     return flask.jsonify(**context)
