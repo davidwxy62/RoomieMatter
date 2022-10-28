@@ -66,35 +66,36 @@ class RoomieList extends React.Component {
     }
 
     fetchData() {
-        // if (document.hasFocus()) { // Uncomment this later
-        fetch(this.props.url)
-        .then((res) => res.json())
-        .then(
-            (data) => {
-                this.setState({
-                    roomies: data.roomies,
-                });
-                const { roomies } = this.state;
-                let notif = this.notifContent(data.roomies, roomies);              
-                if (Object.keys(notif).length > 0) { // There are notifications
-                    if (typeof Notification !== "undefined" && Notification.permission === "granted") {
-                        if ('new_roomie' in notif) {
-                            new Notification("New Roomie!", {
-                                body: 'Welcome ' + notif['new_roomie'].join(', '),
-                            });
-                        } else {
-                            let body_str = '';
-                            for (let [key, value] of Object.entries(notif)) {
-                                body_str += key + ' is now ' + value + '.\n';
+        if (document.hasFocus()) {
+            fetch(this.props.url)
+            .then((res) => res.json())
+            .then(
+                (data) => {
+                    this.setState({
+                        roomies: data.roomies,
+                    });
+                    const { roomies } = this.state;
+                    let notif = this.notifContent(data.roomies, roomies);              
+                    if (Object.keys(notif).length > 0) { // There are notifications
+                        if (typeof Notification !== "undefined" && Notification.permission === "granted") {
+                            if ('new_roomie' in notif) {
+                                new Notification("New Roomie!", {
+                                    body: 'Welcome ' + notif['new_roomie'].join(', '),
+                                });
+                            } else {
+                                let body_str = '';
+                                for (let [key, value] of Object.entries(notif)) {
+                                    body_str += key + ' is now ' + value + '.\n';
+                                }
+                                new Notification("Status Change!", {
+                                    body: body_str,
+                                });
                             }
-                            new Notification("Status Change!", {
-                                body: body_str,
-                            });
-                        }
-                    } 
+                        } 
+                    }
                 }
-            }
-        );
+            );
+        }
     }
             
     notifContent(new_arr, old_arr) {
