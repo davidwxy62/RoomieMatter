@@ -58,19 +58,21 @@ class RoomieList extends React.Component {
 
     componentDidMount() {
         this.fetchData();
-        setInterval(this.fetchData, 2000);
+        setInterval(this.fetchData, 1000);
     }
 
     fetchData() {
-        fetch(this.props.url)
-        .then((res) => res.json())
-        .then(
-            (data) => {
-                this.setState({
-                    roomies: data['roomies'],
-                });
-            },
-        );
+        if (document.hasFocus()) {
+            fetch(this.props.url)
+            .then((res) => res.json())
+            .then(
+                (data) => {
+                    this.setState({
+                        roomies: data['roomies'],
+                    });
+                },
+            );
+        }
     }
             
     render() {
