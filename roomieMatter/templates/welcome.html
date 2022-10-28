@@ -8,8 +8,14 @@
     <body style="background-color: #0099ff">
         <a href="/"><p class="logo">RoomieMatter</p></a>
         <a href="https://docs.google.com/presentation/d/172V2Z67Hw1hbHei56_m5pOsnYBS_34WVUlvM8qvmBPA/edit#slide=id.p"><p class="main80">This Is RoomieMatter</p></a>
-        <a href="/signup"><p class="center">signup</p></a>
-        <a href="/login"><p class="center">login</p></a>
+        <span style="text-align: center">
+            <form action="/signup" method="get" enctype="multipart/form-data">
+                <input class="cuteButton" type="submit" name="signup" value="signup"/>
+            </form>
+            <form action="/login" method="get" enctype="multipart/form-data" style="margin-top: 5px">
+                <input class="cuteButton" type="submit" name="login" value="login"/>
+            </form>
+        </span>
     </body>
 </html>
 
