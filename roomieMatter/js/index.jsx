@@ -58,7 +58,7 @@ class RoomieList extends React.Component {
 
     componentDidMount() {
         this.fetchData();
-        setInterval(this.fetchData, 1000);
+        setInterval(this.fetchData, 2000);
     }
 
     fetchData() {
