@@ -71,20 +71,19 @@ class RoomieList extends React.Component {
             .then((res) => res.json())
             .then(
                 (data) => {
+                    this.setState({
+                        roomies: data.roomies,
+                    });
                     const { roomies } = this.state;
-                    let notif = this.notifContent(data.roomies, roomies);
-                    console.log(notif);                    
-                    if (Object.keys(notif).length > 0) { // There are changes
-                        this.setState({
-                            roomies: data.roomies,
-                        });
+                    let notif = this.notifContent(data.roomies, roomies);              
+                    if (Object.keys(notif).length > 0) { // There are notifications
                         if (typeof Notification !== "undefined" && Notification.permission === "granted") {
                             if ('new_roomie' in notif) {
                                 new Notification("New Roomie!", {
-                                    body: 'Welcome' + notif['new_roomie'].join(', '),
+                                    body: 'Welcome ' + notif['new_roomie'].join(', '),
                                 });
                             } else {
-                                body_str = '';
+                                let body_str = '';
                                 for (let [key, value] of Object.entries(notif)) {
                                     body_str += key + ' is now ' + value + '.\n';
                                 }
@@ -103,7 +102,7 @@ class RoomieList extends React.Component {
         let notif = {}
 
         // Return nothing if someone left the room
-        if (new_arr.length < old_arr.length) {
+        if (new_arr.length < old_arr.length || old_arr.length === 0) {
             return notif;
         }
 
