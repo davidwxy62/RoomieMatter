@@ -52,6 +52,7 @@ class RoomieList extends React.Component {
         super(props);
         this.state = {
             roomies: [],
+            mounted: false,
         };
         this.fetchData = this.fetchData.bind(this);
         this.notifContent = this.notifContent.bind(this);
@@ -73,6 +74,7 @@ class RoomieList extends React.Component {
                 (data) => {
                     this.setState({
                         roomies: data.roomies,
+                        mounted: true,
                     });
                     const { roomies } = this.state;
                     let notif = this.notifContent(data.roomies, roomies);              
@@ -134,8 +136,8 @@ class RoomieList extends React.Component {
     }
 
     render() {
-        const { roomies } = this.state;
-        if (roomies.length === 0) {
+        const { roomies, mounted } = this.state;
+        if (roomies.length === 0 && mounted ) {
             return (<p className="roomie">Go get some roomies!</p>);
         }
         return (
