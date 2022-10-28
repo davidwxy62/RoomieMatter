@@ -1,10 +1,16 @@
 Short Term - 
-seeRoomInvitationOrRequest endpoint
-changeStatus endpoint
-Page to view pending requests and buttons to remove them or to send a new request 
+    Remove roomies
+    Have roomies and status as react components so they can be updated
+    Show room name somewhere
+    change user profile
+    quit room
+    redirect to index page when there's no more requests
+    Have buttons as react components so no forbidden messages
+
 
 
 
 Long Term - 
-Delete request feature to prevent spamming
-feature to generate temp random number for others to join rooms
+    Delete request feature to prevent spamming - feature to generate temp random number for others to join rooms
+    bootstrap
+    database migration script
