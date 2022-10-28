@@ -1,6 +1,7 @@
 """Helpers related to sql querying."""
 from flask import url_for
 from roomieMatter.model import get_db
+from roomieMatter import helper
 
 def username_pwd_match(username, pwd):
     """
@@ -19,9 +20,7 @@ def username_pwd_match(username, pwd):
     user = cur.fetchone()
     if not user:
         return False
-    if 'password' in user:
-        return user['password'] == pwd
-    return False
+    return helper.check_password(user['password'], pwd)
 
 def create_user_db(username, name, email, pwd):
     """
@@ -30,28 +29,12 @@ def create_user_db(username, name, email, pwd):
     If the username is already taken, return True.
     """
     connection = get_db()
-    # print("got here")
-    # cur = connection.execute(
-    #     "SELECT username "
-    #     "FROM users "
-    #     "WHERE username = ? ",
-    #     (username, )
-    # )
-    # user = cur.fetchone()
-    # if user:
-    #     return True
-    # connection.execute(
-    #     "INSERT INTO users (username, email, password) "
-    #     "VALUES (?, ?, ?)",
-    #     (username, email, pwd)
-    # )
-    # return False
     try:
         connection.execute(
             "INSERT INTO users "
             "(username, name, email, password, status) "
             "VALUES (?, ?, ?, ?, ?)",
-            (username, name, email, pwd, 'active')
+            (username, name, email, helper.hash_password(pwd), 'active')
         )
         return False
     except:
