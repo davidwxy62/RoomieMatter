@@ -58,7 +58,7 @@ class RoomieList extends React.Component {
 
     componentDidMount() {
         this.fetchData();
-        // setInterval(this.fetchData, 2000);
+        setInterval(this.fetchData, 2000);
     }
 
     fetchData() {
@@ -92,7 +92,7 @@ class RoomieList extends React.Component {
     }
 }
 
-function Index() {
+function IndexPage() {
     return (
         <div>
             <StatusButton url="/api/status" />
@@ -102,5 +102,5 @@ function Index() {
     );
 }
 
-export default Index;
+export default IndexPage;
 
