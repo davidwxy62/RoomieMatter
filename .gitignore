@@ -80,3 +80,4 @@ AWS_ENTR_390_9_16_2022.pem
 /bin/resttest.sh
 /session.json
 /cookies.txt
+/bin/roomie_db

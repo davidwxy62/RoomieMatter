@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RoomieMatter</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="icon" href="/static/images/favicon.ico">
+</head>
+<body style="background-color: #497aa6">
+
+    <a href="/"><p class="logo">RoomieMatter</p></a>
+
+    <div style="text-align: center">
+        <p class="main80" style="margin-top:20%">Change Name</p>
+
+        <form action="/accounts" method="post" enctype="multipart/form-data">
+            <div>
+                <input class="cuteForm" type="text" name="new_name" placeholder="New Name" required/>
+            </div>
+            <div>
+                <input class="cuteButton" type="submit" value="Confirm"/>
+                <input type="hidden" name="operation" value="changeName"/>
+            </div>
+        </form>
+    </div>
+
+    <p class="bottom_left cuteFont_small">feedbacks plz: davidwxy@umich.edu</p>
+
+</body>
+</html>

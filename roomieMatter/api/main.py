@@ -13,6 +13,7 @@ def status():
     context = {}
     if flask.request.method == 'GET':
         context["status"] = db.get_status_db(flask.session['username'])
+        context["name"] = db.get_name_db(flask.session['username'])
         return flask.jsonify(**context)
     elif flask.request.method == 'POST':
         context["status"] = db.change_status_db(flask.session['username'])
@@ -57,3 +58,4 @@ def roomies():
     #     db.delete_roomie_db(flask.session["username"], form['roomieId'])
     #     context["roomieId"] = form['roomieId']
     #     return flask.jsonify(**context)
+

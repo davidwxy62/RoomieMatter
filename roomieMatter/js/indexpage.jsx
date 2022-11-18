@@ -5,7 +5,8 @@ class StatusButton extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-        status: "Loading...",
+            status: "Loading...",
+            name: "you are",
         };
     }
 
@@ -14,9 +15,10 @@ class StatusButton extends React.Component {
         .then((res) => res.json())
         .then(
             (data) => {
-            this.setState({
-                status: data.status,
-            });
+                this.setState({
+                    status: data.status,
+                    name: data.name,
+                });
             },
         );
     }
@@ -36,11 +38,12 @@ class StatusButton extends React.Component {
     }
 
     render() {
+        const { status, name } = this.state;
         return (
             <div className="margin_top_20">
-                <span className="cuteFont_medium">You Are: </span>
+                <span className="cuteFont_medium">{name}: </span>
             <button className="statusButton" onClick={() => this.handleClick()}>
-                {this.state.status}
+                {status}
             </button>
             </div>
         );
@@ -63,11 +66,10 @@ class RoomieList extends React.Component {
             Notification.requestPermission();
         }
         this.fetchData();
-        setInterval(() => this.fetchData(true), 10000); // Make it slower later so server doesn't get overloaded
+        setInterval(() => this.fetchData(), 5000);
     }
 
-    fetchData(focusRequired = false) {
-        // if (!focusRequired && document.hasFocus()) {
+    fetchData() {
             fetch(this.props.url)
             .then((res) => res.json())
             .then(
@@ -97,7 +99,6 @@ class RoomieList extends React.Component {
                     }
                 }
             );
-        // }
     }
             
     notifContent(new_arr, old_arr) {
@@ -136,7 +137,7 @@ class RoomieList extends React.Component {
     }
 
     render() {
-        const { roomies, mounted } = this.state;
+        const { roomies, mounted, last_refresh } = this.state;
         if (roomies.length === 0 && mounted ) {
             return (<p className="roomie">Go get some roomies!</p>);
         }

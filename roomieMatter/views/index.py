@@ -93,3 +93,5 @@ def viewrequests():
     context['roomname'] = db.get_roomname_db(flask.session['username'])
     context["username"] = flask.session['username']
     return flask.render_template("viewrequests.html", **context)
+
+

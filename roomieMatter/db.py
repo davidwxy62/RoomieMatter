@@ -410,3 +410,174 @@ def get_roomname_db(username):
         return None
 
     return roomname['roomname']
+
+
+def get_all_info_db(username):
+    """Get name, email, and room of a user."""
+    connection = get_db()
+
+    cur = connection.execute(
+        "SELECT id, name, email "
+        "FROM users "
+        "WHERE username = ? ",
+        (username, )
+    )
+    user = cur.fetchone()
+    if not user:
+        return None
+    
+    cur = connection.execute(
+        "SELECT roomId "
+        "FROM roomies "
+        "WHERE roomieId = ? ",
+        (user['id'], )
+    )
+    room = cur.fetchone()
+    if not room:
+        return None
+
+    cur = connection.execute(
+        "SELECT roomname "
+        "FROM rooms "
+        "WHERE id = ?",
+        (room['roomId'], )
+    )
+    roomname = cur.fetchone()
+    if not roomname:
+        return None
+
+    return user['name'], user['email'], roomname['roomname']
+
+
+def change_username_db(username, new_username):
+    """Change a user's username."""
+    connection = get_db()
+
+    try:
+        connection.execute(
+            "UPDATE users "
+            "SET username = ? "
+            "WHERE username = ?",
+            (new_username, username)
+        )
+        return True
+    except:
+        return False
+
+
+def change_name_db(username, new_name):
+    """Change a user's name."""
+    connection = get_db()
+
+    try:
+        connection.execute(
+            "UPDATE users "
+            "SET name = ? "
+            "WHERE username = ?",
+            (new_name, username)
+        )
+        return True
+    except:
+        return False
+
+
+def change_email_db(username, new_email):
+    """Change a user's email."""
+    connection = get_db()
+
+    try:
+        connection.execute(
+            "UPDATE users "
+            "SET email = ? "
+            "WHERE username = ?",
+            (new_email, username)
+        )
+        return True
+    except:
+        return False
+
+
+def change_roomname_db(username, new_room_name):
+    """Change a user's room name."""
+    connection = get_db()
+
+    cur = connection.execute(
+        "SELECT id "
+        "FROM users "
+        "WHERE username = ? ",
+        (username, )
+    )
+    user = cur.fetchone()
+    if not user:
+        return False
+    
+    cur = connection.execute(
+        "SELECT roomId "
+        "FROM roomies "
+        "WHERE roomieId = ? ",
+        (user['id'], )
+    )
+    room = cur.fetchone()
+    if not room:
+        return False
+
+    try:
+        connection.execute(
+            "UPDATE rooms "
+            "SET roomname = ? "
+            "WHERE id = ?",
+            (new_room_name, room['roomId'])
+        )
+        return True
+    except:
+        return False
+
+
+def exit_room_db(username):
+    """Remove a user from their room."""
+    connection = get_db()
+
+    cur = connection.execute(
+        "SELECT id "
+        "FROM users "
+        "WHERE username = ? ",
+        (username, )
+    )
+    user = cur.fetchone()
+    if not user:
+        return False
+    
+    cur = connection.execute(
+        "SELECT roomId "
+        "FROM roomies "
+        "WHERE roomieId = ? ",
+        (user['id'], )
+    )
+    room = cur.fetchone()
+    if not room:
+        return False
+
+    try:
+        connection.execute(
+            "DELETE FROM roomies "
+            "WHERE roomId = ? AND roomieId = ?",
+            (room['roomId'], user['id'])
+        )
+        delete_empty_rooms_db()
+        return True
+    except:
+        return False
+
+
+def delete_empty_rooms_db():
+    """Delete all empty rooms."""
+    connection = get_db()
+
+    try:
+        connection.execute(
+            "DELETE FROM rooms "
+            "WHERE id NOT IN (SELECT roomId FROM roomies)"
+        )
+        return True
+    except:
+        return False

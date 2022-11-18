@@ -19,38 +19,37 @@ def account_post():
         if not db.username_pwd_match(form['username'], form['password']):
             flask.abort(403)
         flask.session['username'] = form['username']
+        return flask.redirect(flask.url_for('show_index'))
 
     elif flask.request.form['operation'] == 'signup':
         account_post_create(flask.request.form)
         flask.session['username'] = flask.request.form['username']
         return flask.redirect(flask.url_for('show_index'))
 
-    # elif flask.request.form['operation'] == 'delete':
-    #     if 'username' not in flask.session:
-    #         flask.abort(403)
-    #     db.delete_account_db(flask.session['username'])
-    #     flask.session.clear()
+    elif flask.request.form['operation'] == 'changeUsername':
+        new_username = flask.request.form['new_username']
+        db.change_username_db(flask.session['username'], new_username)
+        flask.session['username'] = new_username
+        return flask.redirect(flask.url_for('profile'))
 
-    # elif flask.request.form['operation'] == 'edit_account':
-    #     if 'username' not in flask.session:
-    #         flask.abort(403)
-    #     account_post_edit(
-    #         flask.session['username'],
-    #         flask.request.form,
-    #         flask.request.files.get('file')
-    #     )
+    elif flask.request.form['operation'] == 'changeName':
+        new_name = flask.request.form['new_name']
+        db.change_name_db(flask.session['username'], new_name)
+        return flask.redirect(flask.url_for('profile'))
 
-    # elif flask.request.form['operation'] == 'update_password':
-    #     if 'username' not in flask.session:
-    #         flask.abort(403)
-    #     account_post_update_pw(
-    #         flask.session['username'],
-    #         flask.request.form
-    #     )
+    elif flask.request.form['operation'] == 'changeEmail':
+        new_email = flask.request.form['new_email']
+        db.change_email_db(flask.session['username'], new_email)
+        return flask.redirect(flask.url_for('profile'))
 
-    # if not flask.request.args.get('target'):
-    return flask.redirect(flask.url_for('show_index'))
-    # return flask.redirect(flask.request.args.get('target'))
+    elif flask.request.form['operation'] == 'changeRoomName':
+        new_roomname = flask.request.form['new_roomname']
+        db.change_roomname_db(flask.session['username'], new_roomname)
+        return flask.redirect(flask.url_for('profile'))
+
+    elif flask.request.form['operation'] == 'exitRoom':
+        db.exit_room_db(flask.session['username'])
+        return flask.redirect(flask.url_for('show_index'))
 
 
 @roomieMatter.app.route('/accounts/logout/', methods=['POST'])
@@ -59,6 +58,51 @@ def logout_post():
     flask.session.clear()
     return flask.redirect(flask.url_for('welcome'))
 
+
+@roomieMatter.app.route('/profile')
+def profile():
+    """View profile."""
+    if not index.auth():
+        return flask.redirect(flask.url_for('welcome'))
+    name, email, room = db.get_all_info_db(flask.session['username'])
+    context = {
+        "username": flask.session['username'],
+        "name": name,
+        "email": email,
+        "room": room
+    }
+    return flask.render_template("profile.html", **context)
+
+
+@roomieMatter.app.route('/changeUsername', methods=['GET'])
+def change_username():
+    """Change username."""
+    if not index.auth():
+        return flask.redirect(flask.url_for('welcome'))
+    return flask.render_template("changeUsername.html")
+
+
+@roomieMatter.app.route('/changeName', methods=['GET'])
+def change_name():
+    """Change name."""
+    if not index.auth():
+        return flask.redirect(flask.url_for('welcome'))
+    return flask.render_template("changeName.html")
+
+
+@roomieMatter.app.route('/changeEmail', methods=['GET'])
+def change_email():
+    """Change email."""
+    if not index.auth():
+        return flask.redirect(flask.url_for('welcome'))
+    return flask.render_template("changeEmail.html")
+
+@roomieMatter.app.route('/changeRoomName', methods=['GET'])
+def change_roomname():
+    """Change room name."""
+    if not index.auth():
+        return flask.redirect(flask.url_for('welcome'))
+    return flask.render_template("changeRoomName.html")
 
 def account_post_create(form):
     """Sign up a new user."""
