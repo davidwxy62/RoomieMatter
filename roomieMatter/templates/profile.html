@@ -11,7 +11,7 @@
         <p class="main80" style="margin-top: 15%">Your Profile</p>
 
         <p class="roomie">
-            <span style="font-weight: 1000">username: </span>
+            <span style="font-weight: 1000">Username: </span>
             <span>
                 {{username}}&nbsp&nbsp
                 <a href="/changeUsername" style="text-decoration: none;">
@@ -51,10 +51,10 @@
         </p>
 
         <form class="center" action="/accounts/logout" method="post" enctype="multipart/form-data">
-            <input class="logout" type="submit" name="logout" value="logout"/>
+            <input class="logout" type="submit" name="logout" value="Logout"/>
         </form>
-        <form class="center" action="/accounts/" method="post" enctype="multipart/form-data">
-            <input class="logout" type="submit" name="exit" value="exit room"/>
+        <form class="top_right" style="top: 20px" action="/accounts/" method="post" enctype="multipart/form-data">
+            <input class="logout" type="submit" name="exit" value="Exit Room"/>
             <input type="hidden" name="operation" value="exitRoom"/>
         </form>
 

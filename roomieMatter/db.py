@@ -22,6 +22,7 @@ def username_pwd_match(username, pwd):
         return False
     return helper.check_password(user['password'], pwd)
 
+
 def create_user_db(username, name, email, pwd):
     """
     Create a new user in the database.
