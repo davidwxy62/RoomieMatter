@@ -4,6 +4,28 @@
     <title>RoomieMatter</title>
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="icon" href="/static/images/favicon.ico">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        window.onbeforeunload = function() {
+            sessionStorage.setItem("username", $('#username').val());
+            sessionStorage.setItem("name", $('#name').val());
+            sessionStorage.setItem("email", $('#email').val());
+            sessionStorage.setItem("password1", $('#password1').val());
+            sessionStorage.setItem("password2", $('#password2').val());
+        }
+        window.onload = function() {
+            let username = sessionStorage.getItem("username");
+            if (username !== null) $('#username').val(username);
+            let name = sessionStorage.getItem("name");
+            if (name !== null) $('#name').val(name);
+            let email = sessionStorage.getItem("email");
+            if (email !== null) $('#email').val(email);
+            let password1 = sessionStorage.getItem("password1");
+            if (password1 !== null) $('#password1').val(password1);
+            let password2 = sessionStorage.getItem("password2");
+            if (password2 !== null) $('#password2').val(password2);
+        }
+    </script>
 </head>
 <body style="background-color: #497aa6">
     <a href="/"><p class="logo">RoomieMatter</p></a>
@@ -14,19 +36,19 @@
         {% endif %}
         <form action="/accounts/" method="post" enctype="multipart/form-data">
                 <div>
-                    <input class="cuteForm" type="text" name="username" placeholder="Username" required/>
+                    <input id="username" class="cuteForm" type="text" name="username" placeholder="Username" required/>
                 </div>
                 <div>
-                    <input class="cuteForm" type="text" name="name" placeholder="Your Name" required/>
+                    <input id="name" class="cuteForm" type="text" name="name" placeholder="Your Name" required/>
                 </div>
                 <div>
-                    <input class="cuteForm" type="text" name="email" placeholder="Email" required/>
+                    <input id="email" class="cuteForm" type="text" name="email" placeholder="Email" required/>
 
                 <div>
-                    <input class ="cuteForm" type="password" name="password1" placeholder="Password" required/>
+                    <input id="password1" class ="cuteForm" type="password" name="password1" placeholder="Password" required/>
                 </div>
                 <div>
-                    <input class ="cuteForm" type="password" name="password2" placeholder="Re-enter Password" required/>
+                    <input id="password2" class ="cuteForm" type="password" name="password2" placeholder="Re-enter Password" required/>
                 </div>
                     <input class="cuteButton" type="submit" value="Signup"/>
                     <input type="hidden" name="operation" value="signup"/>

@@ -9,9 +9,12 @@ from roomieMatter import db
 from roomieMatter.views import index
 
 
-@roomieMatter.app.route('/accounts/', methods=['POST'])
+@roomieMatter.app.route('/accounts/', methods=['GET', 'POST'])
 def accounts():
     """Doc string."""
+    if flask.request.method != 'POST':
+        return flask.redirect(flask.url_for('show_index'))
+
     if flask.request.form['operation'] == 'login':
         form = flask.request.form
         if len(form['username'])*len(form['password']) == 0 or not db.username_pwd_match(form['username'], form['password']):
