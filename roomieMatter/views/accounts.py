@@ -10,41 +10,55 @@ from roomieMatter.views import index
 
 
 @roomieMatter.app.route('/accounts/', methods=['POST'])
-def account_post():
+def accounts():
     """Doc string."""
     if flask.request.form['operation'] == 'login':
         form = flask.request.form
-        if len(form['username'])*len(form['password']) == 0:
-            flask.abort(400)
-        if not db.username_pwd_match(form['username'], form['password']):
-            flask.abort(403)
+        if len(form['username'])*len(form['password']) == 0 or not db.username_pwd_match(form['username'], form['password']):
+            context = {"error": "Try different usernames or passwords"}
+            return flask.render_template("login.html", **context)
         flask.session['username'] = form['username']
         return flask.redirect(flask.url_for('show_index'))
 
     elif flask.request.form['operation'] == 'signup':
-        account_post_create(flask.request.form)
+        error = account_post_create(flask.request.form)
+        if error:
+            context = {"error": error}
+            return flask.render_template("signup.html", **context)
         flask.session['username'] = flask.request.form['username']
         return flask.redirect(flask.url_for('show_index'))
 
     elif flask.request.form['operation'] == 'changeUsername':
         new_username = flask.request.form['new_username']
-        db.change_username_db(flask.session['username'], new_username)
+        error = db.change_username_db(flask.session['username'], new_username)
+        if error:
+            context = {"error": error}
+            return flask.render_template("changeUsername.html", **context)
         flask.session['username'] = new_username
         return flask.redirect(flask.url_for('profile'))
 
     elif flask.request.form['operation'] == 'changeName':
         new_name = flask.request.form['new_name']
-        db.change_name_db(flask.session['username'], new_name)
+        error = db.change_name_db(flask.session['username'], new_name)
+        if error:
+            context = {"error": error}
+            return flask.render_template("changeName.html", **context)
         return flask.redirect(flask.url_for('profile'))
 
     elif flask.request.form['operation'] == 'changeEmail':
         new_email = flask.request.form['new_email']
-        db.change_email_db(flask.session['username'], new_email)
+        error = db.change_email_db(flask.session['username'], new_email)
+        if error:
+            context = {"error": error}
+            return flask.render_template("changeEmail.html", **context)
         return flask.redirect(flask.url_for('profile'))
 
     elif flask.request.form['operation'] == 'changeRoomName':
         new_roomname = flask.request.form['new_roomname']
-        db.change_roomname_db(flask.session['username'], new_roomname)
+        error = db.change_roomname_db(flask.session['username'], new_roomname)
+        if error:
+            context = {"error": error}
+            return flask.render_template("changeRoomName.html", **context)
         return flask.redirect(flask.url_for('profile'))
 
     elif flask.request.form['operation'] == 'exitRoom':
@@ -107,11 +121,11 @@ def change_roomname():
 def account_post_create(form):
     """Sign up a new user."""
     if form["password1"] != form["password2"]:
-        flask.abort(400)
+        return "Passwords do not match"
     pwd = form["password1"]
-    try:
-        already_exists = db.create_user_db(form['username'], form['name'], form['email'], pwd)
-        if already_exists:
-            flask.abort(409)
-    except KeyError:
-        flask.abort(400)
+
+    already_exists = db.create_user_db(form['username'], form['name'], form['email'], pwd)
+    if already_exists:
+        return already_exists
+    return None
+

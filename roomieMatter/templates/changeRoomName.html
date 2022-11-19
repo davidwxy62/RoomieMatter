@@ -12,6 +12,10 @@
     <div style="text-align: center">
         <p class="main80" style="margin-top:20%">Change Room Name</p>
 
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
         <form action="/accounts" method="post" enctype="multipart/form-data">
             <div>
                 <input class="cuteForm" type="text" name="new_roomname" placeholder="New Room Name" required/>

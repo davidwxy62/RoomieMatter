@@ -155,3 +155,10 @@ a {
 li {
     list-style: none;
 }
+
+.error {
+    color: red;
+    font-size: 20px;
+    font-family: avenir;
+    text-align: center;
+}

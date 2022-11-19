@@ -41,7 +41,7 @@ class StatusButton extends React.Component {
         const { status, name } = this.state;
         return (
             <div className="margin_top_20">
-                <span className="cuteFont_medium">{name}: </span>
+                <span className="roomie fontWeight1000">{name} - </span>
             <button className="statusButton" onClick={() => this.handleClick()}>
                 {status}
             </button>

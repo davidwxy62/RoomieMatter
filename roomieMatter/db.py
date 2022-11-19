@@ -29,6 +29,9 @@ def create_user_db(username, name, email, pwd):
     If the username is already taken, return True.
     """
     connection = get_db()
+    email = email.lower()
+
+
     try:
         connection.execute(
             "INSERT INTO users "
@@ -38,7 +41,23 @@ def create_user_db(username, name, email, pwd):
         )
         return False
     except:
-        return True
+        cur = connection.execute(
+            "SELECT * "
+            "FROM users "
+            "WHERE username = ?",
+            (username, )
+        )
+        if cur.fetchone():
+            return "Username already taken"
+        cur = connection.execute(
+            "SELECT * "
+            "FROM users "
+            "WHERE email = ?",
+            (email, )
+        )
+        if cur.fetchone():
+            return "Email already taken"
+        return True # Unknown error
 
 
 def create_room_db(username, roomname):
@@ -460,14 +479,38 @@ def change_username_db(username, new_username):
             "WHERE username = ?",
             (new_username, username)
         )
-        return True
+        return None
     except:
-        return False
+        return "Username already taken"
 
 
 def change_name_db(username, new_name):
     """Change a user's name."""
     connection = get_db()
+
+    # return error if roomie has the same name in the same room
+    cur = connection.execute(
+        "SELECT roomId "
+        "FROM roomies INNER JOIN users "
+        "ON roomies.roomieId = users.id "
+        "WHERE users.username = ?",
+        (username, )
+    )
+    room = cur.fetchone()
+    if not room:
+        return "Unknown error"
+
+    cur = connection.execute(
+        "SELECT name "
+        "FROM roomies INNER JOIN users "
+        "ON roomies.roomieId = users.id "
+        "WHERE roomies.roomId = ?",
+        (room['roomId'], )
+    )
+    roomies = cur.fetchall()
+
+    if new_name in [roomie['name'] for roomie in roomies]:
+        return "Name already taken"
 
     try:
         connection.execute(
@@ -476,14 +519,15 @@ def change_name_db(username, new_name):
             "WHERE username = ?",
             (new_name, username)
         )
-        return True
+        return None
     except:
-        return False
+        return "Unknown error"
 
 
 def change_email_db(username, new_email):
     """Change a user's email."""
     connection = get_db()
+    new_email = new_email.lower()
 
     try:
         connection.execute(
@@ -492,9 +536,9 @@ def change_email_db(username, new_email):
             "WHERE username = ?",
             (new_email, username)
         )
-        return True
+        return None
     except:
-        return False
+        return "Email already taken"
 
 
 def change_roomname_db(username, new_room_name):
@@ -509,7 +553,7 @@ def change_roomname_db(username, new_room_name):
     )
     user = cur.fetchone()
     if not user:
-        return False
+        return "Unknown error"
     
     cur = connection.execute(
         "SELECT roomId "
@@ -519,7 +563,7 @@ def change_roomname_db(username, new_room_name):
     )
     room = cur.fetchone()
     if not room:
-        return False
+        return "Unknown error"
 
     try:
         connection.execute(
@@ -528,9 +572,9 @@ def change_roomname_db(username, new_room_name):
             "WHERE id = ?",
             (new_room_name, room['roomId'])
         )
-        return True
+        return None
     except:
-        return False
+        return "Room name already taken"
 
 
 def exit_room_db(username):

@@ -8,16 +8,12 @@
     
     <body style="background-color: #497aa6">
         <a href="/"><p class="logo">RoomieMatter</p></a>
-        <form class="top_right" action="/accounts/logout" method="post" enctype="multipart/form-data">
-            <input class="logout" type="submit" name="logout" value="logout"/>
-        </form>
         <a href="/profile">
             <p class="cuteFont_medium" style="text-align: right; margin-bottom: 0px;">{{username}}</p>
         </a>
-        <p class="cuteFont_medium" style="text-align: right; margin-top:0px;">{{roomname}}</p>
         {% if joined %}
-        <div style="text-align: center;" id="reactEntry_indexPage" style="margin-top: 20%"></div>
-        <script type="text/javascript" src="{{ url_for('static', filename='js/bundle.js') }}"></script>
+            <div style="text-align: center;" id="reactEntry_indexPage" style="margin-top: 20%"></div>
+            <script type="text/javascript" src="{{ url_for('static', filename='js/bundle.js') }}"></script>
         {% if has_pending_requests %}
             <form class="center" action="/viewrequests" method="get" enctype="multipart/form-data" style="margin-top: 30px">
                 <input class="cuteButton" type="submit" name="view" value="View Join Requests"/>
@@ -26,6 +22,9 @@
         {% else %}
             <a href="/request" style="text-decoration: none;"><p class="main80" style="margin-top: 22%;">Request to join a room</p></a>
             <a href="/createroom" style="text-decoration: none;"><p class="main80" style="margin-top: 30px;">Create a room</p></a>
+            <form class="top_right" action="/accounts/logout" method="post" enctype="multipart/form-data">
+                <input class="logout" type="submit" name="logout" value="logout"/>
+            </form>
         {% endif %}
         <p class="bottom_left cuteFont_small">feedbacks plz: davidwxy@umich.edu</p>
     </body>

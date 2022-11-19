@@ -9,6 +9,9 @@
     <a href="/"><p class="logo">RoomieMatter</p></a>
     <div style="text-align: center">
         <p class="main80" style="margin-top: 18%;">Signup</p>
+        {% if error %}
+            <p class="error">{{error}}</p>
+        {% endif %}
         <form action="/accounts/" method="post" enctype="multipart/form-data">
                 <div>
                     <input class="cuteForm" type="text" name="username" placeholder="Username" required/>
