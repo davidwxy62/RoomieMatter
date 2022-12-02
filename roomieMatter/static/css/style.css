@@ -1,6 +1,43 @@
+body{
+    background-color:  #497aa6;
+}
+.nav-link {
+    padding-top: 20px;
+    color: white !important;
+    font-size: 1.5rem;
+    font-family: avenir-black;
+}
+/* hover????? */
+.nav-link:hover {
+    color:#fccf6e !important;
+}
+.dropdown-menu{
+    background-color:#497aa6;
+    border: none !important;
+}
+.dropdown-item{
+    font-family: avenir-black;
+    color: white;
+}
+
+.dropdown-item:hover{
+    font-family: avenir-black;
+    color: #fccf6e;
+    background-color:#497aa6;
+}
+
+
+
+@media all and (min-width: 992px) {
+	.navbar .nav-item .dropdown-menu{ display:none; }
+	.navbar .nav-item:hover .nav-link{  color:#fccf6e; border:none; }
+	.navbar .nav-item:hover .dropdown-menu{ display: block; color:#497aa6!important;}
+	.navbar .nav-item .dropdown-menu{ margin-top:0; }
+}
+
 .main80 {
     text-align: center;
-    margin-top: 25%;
+    margin-top: 18%;
     font-family: avenir;
     font-size: 80px;
     font-weight: 1000;
