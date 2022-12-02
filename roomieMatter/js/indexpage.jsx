@@ -6,7 +6,7 @@ class StatusButton extends React.Component {
         super(props);
         this.state = {
             status: "Loading...",
-            name: "you are",
+            name: "Loading...",
         };
     }
 
@@ -36,6 +36,8 @@ class StatusButton extends React.Component {
             },
         );
     }
+    // timeout
+    
 
     render() {
         const { status, name } = this.state;
