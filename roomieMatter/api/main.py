@@ -9,7 +9,6 @@ import roomieMatter.db as db
 @roomieMatter.app.route('/api/particle')
 def particle():
     """Particle API."""
-    # localhost:8000/api/particle?username=%22davidwxy%22&password=%22david12345%22&status=%22quiet%22
     args = flask.request.args
     if db.username_pwd_match(args['username'], args['password']):
         if db.get_status_db(args['username']) != args['changeTo']:

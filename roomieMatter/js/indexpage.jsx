@@ -21,7 +21,21 @@ class StatusButton extends React.Component {
                 });
             },
         );
+        setInterval(() => this.fetchData(), 5000);
     }
+
+    fetchData() {
+        fetch("api/status")
+        .then((res) => res.json())
+        .then(
+            (data) => {
+                this.setState({
+                    status: data.status,
+                });
+            },
+        );
+    }
+
 
     handleClick() {
         fetch(this.props.url, {
