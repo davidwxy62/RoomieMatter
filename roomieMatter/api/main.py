@@ -11,12 +11,11 @@ def particle():
     """Particle API."""
     # localhost:8000/api/particle?username=%22davidwxy%22&password=%22david12345%22&status=%22quiet%22
     args = flask.request.args
-    username = args['username'][1:-1]
-    password = args['password'][1:-1]
+    username = args['username']
+    password = args['password']
     if db.username_pwd_match(username, password):
         if db.get_status_db(username) != args['status']:
-            print(username)
-            print(db.change_status_db(username))
+            db.change_status_db(username)
         return flask.Response(status=204)
     return flask.Response(status=401)
 
