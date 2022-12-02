@@ -224,7 +224,7 @@ def get_status_db(username):
 def change_status_db(username):
     """Change the status of a user."""
     connection = get_db()
-
+    print(username)
     cur = connection.execute(
         "SELECT status "
         "FROM users "

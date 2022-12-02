@@ -6,13 +6,17 @@ import roomieMatter.views.index as index
 import roomieMatter.db as db
 
 
-@roomieMatter.app.route('/api/particle', methods=['POST'])
+@roomieMatter.app.route('/api/particle')
 def particle():
     """Particle API."""
-    form = flask.request.form
-    if db.username_pwd_match(form['username'], form['password']):
-        if db.get_status_db(form['username']) != form['status']:
-            db.change_status_db(form['username'])
+    # localhost:8000/api/particle?username=%22davidwxy%22&password=%22david12345%22&status=%22quiet%22
+    args = flask.request.args
+    username = args['username'][1:-1]
+    password = args['password'][1:-1]
+    if db.username_pwd_match(username, password):
+        if db.get_status_db(username) != args['status']:
+            print(username)
+            print(db.change_status_db(username))
         return flask.Response(status=204)
     return flask.Response(status=401)
 
