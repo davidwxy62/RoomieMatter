@@ -17,13 +17,21 @@ body{
 }
 .dropdown-item{
     font-family: avenir-black;
-    color: white
+    color: white;
 }
 
+.dropdown-item:hover{
+    font-family: avenir-black;
+    color: #fccf6e;
+    background-color:#497aa6;
+}
+
+
+
 @media all and (min-width: 992px) {
-	.navbar .nav-item .dropdown-menu{ display: none; }
-	.navbar .nav-item:hover .nav-link{  color:#fccf6e; }
-	.navbar .nav-item:hover .dropdown-menu{ display: block; }
+	.navbar .nav-item .dropdown-menu{ display:none; }
+	.navbar .nav-item:hover .nav-link{  color:#fccf6e; border:none; }
+	.navbar .nav-item:hover .dropdown-menu{ display: block; color:#497aa6!important;}
 	.navbar .nav-item .dropdown-menu{ margin-top:0; }
 }
 
