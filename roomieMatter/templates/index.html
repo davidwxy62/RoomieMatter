@@ -24,11 +24,53 @@
         <link rel="icon" href="/static/images/favicon.ico">
     </head>
     
-    <body>
+    <body data-spy="scroll" data-target=".navbar" data-offset="100">
+        <nav class="navbar  navbar-light navbar-expand-sm navbackground fixed-top ">
+            <!--     add d-block d-sm-none class name if you just want the brand name to appear in the mobile view.-->
+            <a class="navbar-brand page-scroll" href="#view"> </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <!--        Try justify-content-start, justify-content-end or justify-content-between, justify-content-around to see different layout styles for the navigation.-->
+            <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto ">
+                    <li class="nav-item">
+                        <a class="nav-link page-scroll" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link page-scroll" href="/">Room</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link page-scroll" href="#">Tasks</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link page-scroll" href="#">Money</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link page-scroll dropdown-toggle" href="#" data-bs-toggle="dropdown"> Schedule </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#"> shower</a></li>
+                                <li><a class="dropdown-item" href="#"> laudry</a></li>
+                                <li><a class="dropdown-item" href="#"> cooking</a></li>
+                            </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link page-scroll" href="/profile">Account</a>
+                    </li>
+        
+                </ul>
+        
+                <ul class="navbar-nav flex-row">
+                    <!--Add any extra nav items to the-->
+                    <!--<li class="nav-item pr-2">
+                        <a class="social" href="#"><i class="fab fa-twitter-square"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="social" href="#"><i class="fab fa-twitter-square"></i></a>
+                    </li>-->
+                </ul>
+            </div>
+        </nav>
+
         <a href="/"><p class="logo">RoomieMatter</p></a>
-        <a href="/profile">
-            <p class="cuteFont_medium" style="text-align: right; margin-bottom: 0px;">{{username}}</p>
-        </a>
         {% if joined %}
             <div style="text-align: center;" id="reactEntry_indexPage" style="margin-top: 20%"></div>
             <script type="text/javascript" src="{{ url_for('static', filename='js/bundle.js') }}"></script>

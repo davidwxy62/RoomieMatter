@@ -22,10 +22,7 @@ def show_index():
     if not auth():
         return flask.redirect(flask.url_for('welcome'))
     context = {}
-    context["username"] = flask.session['username']
     context['joined'] = db.is_joined_db(flask.session['username'])
-    if context['joined']:
-        context['roomname'] = db.get_roomname_db(flask.session['username'])
     context["has_pending_requests"] = db.has_pending_requests_db(flask.session['username'])
     if flask.session.get("username", None) == "mh988":
         return flask.render_template("secret.html", **context)

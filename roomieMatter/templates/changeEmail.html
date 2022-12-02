@@ -1,33 +1,93 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>RoomieMatter</title>
-    <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="icon" href="/static/images/favicon.ico">
-</head>
-<body style="background-color: #497aa6">
+    <head>
+        <meta http-equiv="content-type" content="text/html">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="author" content="">
+        <title>RoomieMatter</title>
+    
+        <!-- Bootstrap Core CSS ––––––––––––––––––––––––––– -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous" />
+        <!-- Custom CSS ––––––––––––––––––––––––––– -->
+        <link href="/static/css/style.css" rel="stylesheet">
+        <!-- fontawesome ––––––––––––––––––––––––––– -->
+        <script src="https://kit.fontawesome.com/5c9f2dfb26.js"></script>
+        <!-- To add a google font and paste the link -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/static/css/style.css">
+        <link rel="icon" href="/static/images/favicon.ico">
+    </head>
 
-    <a href="/"><p class="logo">RoomieMatter</p></a>
-
-    <div style="text-align: center">
-        <p class="main80" style="margin-top:20%">Change Email</p>
-
-        {% if error %}
-            <p class="error">{{ error }}</p>
-        {% endif %}
-
-        <form action="/accounts" method="post" enctype="multipart/form-data">
-            <div>
-                <input class="cuteForm" type="text" name="new_email" placeholder="New Email" required/>
+    <body data-spy="scroll" data-target=".navbar" data-offset="100">
+        <nav class="navbar  navbar-light navbar-expand-sm navbackground fixed-top ">
+            <!--     add d-block d-sm-none class name if you just want the brand name to appear in the mobile view.-->
+            <a class="navbar-brand page-scroll" href="#view"> </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <!--        Try justify-content-start, justify-content-end or justify-content-between, justify-content-around to see different layout styles for the navigation.-->
+            <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto ">
+                    <li class="nav-item">
+                        <a class="nav-link page-scroll" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link page-scroll" href="/">Room</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link page-scroll" href="#">Tasks</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link page-scroll" href="#">Money</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link page-scroll dropdown-toggle" href="#" data-bs-toggle="dropdown"> Schedule </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#"> shower</a></li>
+                                <li><a class="dropdown-item" href="#"> laudry</a></li>
+                                <li><a class="dropdown-item" href="#"> cooking</a></li>
+                            </ul>
+                    </li>
+        
+                </ul>
+        
+                <ul class="navbar-nav flex-row">
+                    <!--Add any extra nav items to the-->
+                    <!--<li class="nav-item pr-2">
+                        <a class="social" href="#"><i class="fab fa-twitter-square"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="social" href="#"><i class="fab fa-twitter-square"></i></a>
+                    </li>-->
+                </ul>
             </div>
-            <div>
-                <input class="cuteButton" type="submit" value="Confirm"/>
-                <input type="hidden" name="operation" value="changeEmail"/>
-            </div>
-        </form>
-    </div>
+        </nav>
+        
+        <a href="/"><p class="logo">RoomieMatter</p></a>
 
-    <p class="bottom_left cuteFont_small">feedbacks plz: davidwxy@umich.edu</p>
+        <div style="text-align: center">
+            <p class="main80" style="margin-top:20%">Change Email</p>
 
-</body>
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
+
+            <form action="/accounts" method="post" enctype="multipart/form-data">
+                <div>
+                    <input class="cuteForm" type="text" name="new_email" placeholder="New Email" required/>
+                </div>
+                <div>
+                    <input class="cuteButton" type="submit" value="Confirm"/>
+                    <input type="hidden" name="operation" value="changeEmail"/>
+                </div>
+            </form>
+        </div>
+
+        <p class="bottom_left cuteFont_small">feedbacks plz: davidwxy@umich.edu</p>
+
+    </body>
 </html>
