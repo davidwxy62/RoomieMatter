@@ -56,7 +56,7 @@ class StatusButton extends React.Component {
     render() {
         const { status, name } = this.state;
         return (
-            <div className="margin_top_20">
+            <div className="margin_top_27">
                 <span className="roomie fontWeight1000">{name} - </span>
             <button className="statusButton" onClick={() => this.handleClick()}>
                 {status}
@@ -171,7 +171,7 @@ function IndexPage() {
     return (
         <div>
             <StatusButton url="/api/status" />
-            <p className="main80 top30px">Your Roomies:</p>
+            {/* <p className="main80 top30px">Your Roomies:</p> */}
             <RoomieList url="/api/roomies" />
         </div>
     );
