@@ -11,7 +11,8 @@ def particle():
     """Particle API."""
     form = flask.request.form
     if db.username_pwd_match(form['username'], form['password']):
-        db.change_status_db(form['username'])
+        if db.get_status_db(form['username']) != form['status']:
+            db.change_status_db(form['username'])
         return flask.Response(status=204)
     return flask.Response(status=401)
 
