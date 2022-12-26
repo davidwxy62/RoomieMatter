@@ -14,8 +14,8 @@ VALUES ("xxy", "Mie", "mie@email.com", "0cce1e67046bff9271ed1fca85218054c3dd172f
 -- mie12345
 
 INSERT INTO users
-(username, "name", email, password, status)
-VALUES ("wolfwolf", "huiTaiLang", "htl@email.com", "d0a65ea91596ed1643f281d08c3923c2b146455e309e6e6403de19489b4d2f49a4700b094cb8b3932fd39a5392473941c23cbce0cacb81f69dbb081eb7f9ec09:046820e9bc4b4cca86f95d243b1e2553", "active");
+(username, "name", email, password, status, IP)
+VALUES ("wolfwolf", "huiTaiLang", "htl@email.com", "d0a65ea91596ed1643f281d08c3923c2b146455e309e6e6403de19489b4d2f49a4700b094cb8b3932fd39a5392473941c23cbce0cacb81f69dbb081eb7f9ec09:046820e9bc4b4cca86f95d243b1e2553", "active", "0.0.0.0");
 -- htl12345
 
 INSERT INTO rooms

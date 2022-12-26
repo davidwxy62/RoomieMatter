@@ -28,11 +28,15 @@ def show_index():
         return flask.render_template("secret.html", **context)
     return flask.render_template("index.html", **context)
 
+@roomieMatter.app.route('/about')
+def about():
+    """Display /about route."""
+    return flask.render_template("about.html")
+
 @roomieMatter.app.route('/login')
 def login():
     """Login form"""
-    context = {}
-    return flask.render_template("login.html", **context)
+    return flask.render_template("login.html")
 
 @roomieMatter.app.route('/signup')
 def signup():

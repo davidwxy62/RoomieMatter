@@ -31,37 +31,19 @@ def accounts():
         flask.session['username'] = flask.request.form['username']
         return flask.redirect(flask.url_for('show_index'))
 
-    elif flask.request.form['operation'] == 'changeUsername':
-        new_username = flask.request.form['new_username']
-        error = db.change_username_db(flask.session['username'], new_username)
+    elif flask.request.form['operation'] == 'changeProfile':
+        error = db.change_profile_db(flask.request.form, flask.session['username'])
         if error:
-            context = {"error": error}
-            return flask.render_template("changeUsername.html", **context)
-        flask.session['username'] = new_username
-        return flask.redirect(flask.url_for('profile'))
-
-    elif flask.request.form['operation'] == 'changeName':
-        new_name = flask.request.form['new_name']
-        error = db.change_name_db(flask.session['username'], new_name)
-        if error:
-            context = {"error": error}
-            return flask.render_template("changeName.html", **context)
-        return flask.redirect(flask.url_for('profile'))
-
-    elif flask.request.form['operation'] == 'changeEmail':
-        new_email = flask.request.form['new_email']
-        error = db.change_email_db(flask.session['username'], new_email)
-        if error:
-            context = {"error": error}
-            return flask.render_template("changeEmail.html", **context)
-        return flask.redirect(flask.url_for('profile'))
-
-    elif flask.request.form['operation'] == 'changeRoomName':
-        new_roomname = flask.request.form['new_roomname']
-        error = db.change_roomname_db(flask.session['username'], new_roomname)
-        if error:
-            context = {"error": error}
-            return flask.render_template("changeRoomName.html", **context)
+            print(error)
+            name, email, room = db.get_all_info_db(flask.session['username'])
+            context = {
+                "username": flask.session['username'],
+                "name": name,
+                "email": email,
+                "room": room,
+                "error": error
+            }
+            return flask.render_template("changeProfile.html", **context)
         return flask.redirect(flask.url_for('profile'))
 
     elif flask.request.form['operation'] == 'exitRoom':
@@ -90,6 +72,19 @@ def profile():
     }
     return flask.render_template("profile.html", **context)
 
+@roomieMatter.app.route('/changeProfile', methods=['GET'])
+def change_profile():
+    """Change profile."""
+    if not index.auth():
+        return flask.redirect(flask.url_for('welcome'))
+    name, email, room = db.get_all_info_db(flask.session['username'])
+    context = {
+        "username": flask.session['username'],
+        "name": name,
+        "email": email,
+        "room": room
+    }
+    return flask.render_template("changeProfile.html", **context)
 
 @roomieMatter.app.route('/changeUsername', methods=['GET'])
 def change_username():

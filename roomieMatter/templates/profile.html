@@ -1,123 +1,36 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="content-type" content="text/html">
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="keywords" content="">
-        <meta name="author" content="">
-        <title>RoomieMatter</title>
-    
-        <!-- Bootstrap Core CSS ––––––––––––––––––––––––––– -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous" />
-        <!-- Custom CSS ––––––––––––––––––––––––––– -->
-        <link href="/static/css/style.css" rel="stylesheet">
-        <!-- fontawesome ––––––––––––––––––––––––––– -->
-        <script src="https://kit.fontawesome.com/5c9f2dfb26.js"></script>
-        <!-- To add a google font and paste the link -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="/static/css/style.css">
-        <link rel="icon" href="/static/images/favicon.ico">
-    </head>
-    <body data-spy="scroll" data-target=".navbar" data-offset="100">
-        <nav class="navbar  navbar-light navbar-expand-sm navbackground fixed-top ">
-            <!--     add d-block d-sm-none class name if you just want the brand name to appear in the mobile view.-->
-            <a class="navbar-brand page-scroll" href="#view"> </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            <!--        Try justify-content-start, justify-content-end or justify-content-between, justify-content-around to see different layout styles for the navigation.-->
-            <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
-                <ul class="navbar-nav mx-auto ">
-                    <li class="nav-item">
-                        <a class="nav-link page-scroll" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link page-scroll" href="/">Room</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link page-scroll" href="#">Tasks</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link page-scroll" href="#">Money</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link page-scroll dropdown-toggle" href="#" data-bs-toggle="dropdown"> Schedule </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#"> shower</a></li>
-                                <li><a class="dropdown-item" href="#"> laundry</a></li>
-                                <li><a class="dropdown-item" href="#"> cooking</a></li>
-                            </ul>
-                    </li>
-        
-                </ul>
-        
-                <ul class="navbar-nav flex-row">
-                    <!--Add any extra nav items to the-->
-                    <!--<li class="nav-item pr-2">
-                        <a class="social" href="#"><i class="fab fa-twitter-square"></i></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="social" href="#"><i class="fab fa-twitter-square"></i></a>
-                    </li>-->
-                </ul>
-            </div>
-        </nav>
-        
-        <a href="/"><p class="logo">RoomieMatter</p></a>
+{% extends "base.html" %}
+{% block content %}
         <p class="main80" style="margin-top: 15%">Your Profile</p>
 
         <p class="roomie">
             <span style="font-weight: 1000">Username: </span>
-            <span>
-                {{username}}&nbsp&nbsp
-                <a href="/changeUsername" style="text-decoration: none;">
-                    <span class="roomie" style="text-decoration-line: underline;">change</span>
-                </a>
-            </span>
+            {{username}}
         </p>
 
         <p class="roomie">
             <span style="font-weight: 1000">Name: </span>
-            <span>
-                {{name}}&nbsp&nbsp
-                <a href="/changeName" style="text-decoration: none;">
-                    <span class="roomie" style="text-decoration-line: underline;">change</span>
-                </a>
-            </span>
+            {{name}}
         </p>
 
         <p class="roomie">
             <span style="font-weight: 1000">Email: </span>
-            <span>
-                {{email}}&nbsp&nbsp
-                <a href="/changeEmail" style="text-decoration: none;">
-                    <span class="roomie" style="text-decoration-line: underline;">change</span>
-                </a>
-            </span>
+            {{email}}
         </p>
 
         <p class="roomie">
             <span style="font-weight: 1000">Room: </span>
-            <span>
-                {{room}}&nbsp&nbsp
-                <a href="/changeRoomName" style="text-decoration: none;">
-                    <span class="roomie" style="text-decoration-line: underline;">change</span>
-                </a>
-            </span>
+            {{room}}
         </p>
 
+        <form class="center" action="/changeProfile" method="get" enctype="multipart/form-data">
+            <input class="logout" type="submit" value="Change"/>
+        </form>
         <form class="center" action="/accounts/logout" method="post" enctype="multipart/form-data">
-            <input class="logout" type="submit" name="logout" value="Logout"/>
+            <input class="logout" type="submit" value="Logout"/>
         </form>
         <form class="top_right" style="top: 20px" action="/accounts/" method="post" enctype="multipart/form-data">
             <input class="logout" type="submit" name="exit" value="Exit Room"/>
             <input type="hidden" name="operation" value="exitRoom"/>
         </form>
 
-        <p class="bottom_left cuteFont_small">feedbacks plz: davidwxy@umich.edu</p>
-    </body>
-</html>
-
+{% endblock %}

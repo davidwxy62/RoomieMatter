@@ -21,7 +21,7 @@ class StatusButton extends React.Component {
                 });
             },
         );
-        setInterval(() => this.fetchData(), 1000);
+        setInterval(() => this.fetchData(), 5000);
     }
 
     fetchData() {
@@ -82,7 +82,7 @@ class RoomieList extends React.Component {
             Notification.requestPermission();
         }
         this.fetchData();
-        setInterval(() => this.fetchData(), 1000);
+        setInterval(() => this.fetchData(), 5000);
     }
 
     fetchData() {

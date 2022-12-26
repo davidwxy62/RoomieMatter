@@ -7,7 +7,8 @@ CREATE TABLE users
     "name" VARCHAR(50) NOT NULL,
     email VARCHAR(40) NOT NULL UNIQUE,
     "password" VARCHAR (161) NOT NULL ,
-    "status" VARCHAR (20)
+    "status" VARCHAR (20),
+    IP VARCHAR (16)
 );
 
 CREATE TABLE rooms

@@ -11,9 +11,13 @@ def particle():
     """Particle API."""
     args = flask.request.args
     if db.username_pwd_match(args['username'], args['password']):
-        if db.get_status_db(args['username']) != args['changeTo']:
-            db.change_status_db(args['username'])
-        return flask.Response(status=204)
+        if 'changeTo' in args:
+            if db.get_status_db(args['username']) != args['changeTo']:
+                db.change_status_db(args['username'])
+            return flask.Response(status=204)
+        elif 'IP' in args:
+            db.update_ip_db(args['username'], args['IP'])
+            return flask.Response(status=204)
     return flask.Response(status=401)
 
 

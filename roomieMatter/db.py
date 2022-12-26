@@ -1,5 +1,5 @@
 """Helpers related to sql querying."""
-from flask import url_for
+import flask
 from roomieMatter.model import get_db
 from roomieMatter import helper
 
@@ -454,7 +454,7 @@ def get_all_info_db(username):
     )
     room = cur.fetchone()
     if not room:
-        return None
+        return user['name'], user['email'], ""
 
     cur = connection.execute(
         "SELECT roomname "
@@ -626,3 +626,112 @@ def delete_empty_rooms_db():
         return True
     except:
         return False
+
+
+def update_ip_db(args):
+    """Update a user's IP."""
+    connection = get_db()
+
+    try:
+        connection.execute(
+            "UPDATE users "
+            "SET IP = ? "
+            "WHERE username = ?",
+            (args['IP'], args['username'])
+        )
+        return True
+    except:
+        return False
+
+
+def change_profile_db(form, username):
+    """Change a user's profile."""
+    connection = get_db()
+
+    # changing username
+    try:
+        connection.execute(
+            "UPDATE users "
+            "SET username = ? "
+            "WHERE username = ?",
+            (form['username'], username)
+        )
+    except:
+        return "Username already taken"
+    username = form['username']
+    flask.session['username'] = username
+    
+    # changing name
+    # return error if roomie has the same name in the same room
+    cur = connection.execute(
+        "SELECT roomId "
+        "FROM roomies INNER JOIN users "
+        "ON roomies.roomieId = users.id "
+        "WHERE users.username = ?",
+        (username, )
+    )
+    room = cur.fetchone()
+    if not room:
+        return "Unknown error"
+    cur = connection.execute(
+        "SELECT name "
+        "FROM roomies INNER JOIN users "
+        "ON roomies.roomieId = users.id "
+        "WHERE roomies.roomId = ? AND users.username != ?",
+        (room['roomId'], username)
+    )
+    roomies = cur.fetchall()
+    if form['name'] in [roomie['name'] for roomie in roomies]:
+        return "Name already taken"
+    try:
+        connection.execute(
+            "UPDATE users "
+            "SET name = ? "
+            "WHERE username = ?",
+            (form['name'], username)
+        )
+    except:
+        return "Unknown error"
+
+    # changing email
+    new_email = form['email'].lower()
+    try:
+        connection.execute(
+            "UPDATE users "
+            "SET email = ? "
+            "WHERE username = ?",
+            (new_email, username)
+        )
+    except:
+        return "Email already taken"
+
+    # changing room name
+    cur = connection.execute(
+        "SELECT id "
+        "FROM users "
+        "WHERE username = ? ",
+        (username, )
+    )
+    user = cur.fetchone()
+    if not user:
+        return "Unknown error"
+    cur = connection.execute(
+        "SELECT roomId "
+        "FROM roomies "
+        "WHERE roomieId = ? ",
+        (user['id'], )
+    )
+    room = cur.fetchone()
+    if not room:
+        return "Unknown error"
+    try:
+        connection.execute(
+            "UPDATE rooms "
+            "SET roomname = ? "
+            "WHERE id = ?",
+            (form['room'], room['roomId'])
+        )
+    except:
+        return "Room name already taken"
+    return None
+

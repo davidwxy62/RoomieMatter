@@ -82,3 +82,6 @@ AWS_ENTR_390_9_16_2022.pem
 /cookies.txt
 /bin/roomie_db
 /particle
+/always_forget.txt
+.DS_Store
+.editorconfig
