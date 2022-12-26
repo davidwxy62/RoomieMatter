@@ -1,12 +1,17 @@
 """
-Insta485 account related view.
+RoomieMatter account related view.
+URLs include:
+/accounts/
+/accounts/logout/
+/profile
+/changeProfile
 
-URLs related to /acounts/.
 """
 import flask
 import roomieMatter
 from roomieMatter import db
 from roomieMatter.views import index
+from roomieMatter import helper
 
 
 @roomieMatter.app.route('/accounts/', methods=['GET', 'POST'])
@@ -24,7 +29,7 @@ def accounts():
         return flask.redirect(flask.url_for('show_index'))
 
     elif flask.request.form['operation'] == 'signup':
-        error = account_post_create(flask.request.form)
+        error = helper.newUser(flask.request.form)
         if error:
             context = {"error": error}
             return flask.render_template("signup.html", **context)
@@ -85,45 +90,3 @@ def change_profile():
         "room": room
     }
     return flask.render_template("changeProfile.html", **context)
-
-@roomieMatter.app.route('/changeUsername', methods=['GET'])
-def change_username():
-    """Change username."""
-    if not index.auth():
-        return flask.redirect(flask.url_for('welcome'))
-    return flask.render_template("changeUsername.html")
-
-
-@roomieMatter.app.route('/changeName', methods=['GET'])
-def change_name():
-    """Change name."""
-    if not index.auth():
-        return flask.redirect(flask.url_for('welcome'))
-    return flask.render_template("changeName.html")
-
-
-@roomieMatter.app.route('/changeEmail', methods=['GET'])
-def change_email():
-    """Change email."""
-    if not index.auth():
-        return flask.redirect(flask.url_for('welcome'))
-    return flask.render_template("changeEmail.html")
-
-@roomieMatter.app.route('/changeRoomName', methods=['GET'])
-def change_roomname():
-    """Change room name."""
-    if not index.auth():
-        return flask.redirect(flask.url_for('welcome'))
-    return flask.render_template("changeRoomName.html")
-
-def account_post_create(form):
-    """Sign up a new user."""
-    if form["password1"] != form["password2"]:
-        return "Passwords do not match"
-    pwd = form["password1"]
-
-    already_exists = db.create_user_db(form['username'], form['name'], form['email'], pwd)
-    if already_exists:
-        return already_exists
-    return None
-

@@ -34,3 +34,15 @@ def check_password(hashed_password, user_password):
     password, salt = hashed_password.split(':')
     pepper = b'\xda\xa1\xcbg\xd3\xddP\x9a\xd6\xa2\xe0\xadP\xe0a.'
     return password == hashlib.sha512(salt.encode() + user_password.encode() + pepper).hexdigest()
+
+
+def newUser(form):
+    """Sign up a new user."""
+    if form["password1"] != form["password2"]:
+        return "Passwords do not match"
+    pwd = form["password1"]
+
+    already_exists = db.create_user_db(form['username'], form['name'], form['email'], pwd)
+    if already_exists:
+        return already_exists
+    return None

@@ -1,7 +1,14 @@
 """
-roomieMatter index (main) view.
+RoomieMatter index (main) view.
 URLs include:
 /
+/about
+/login
+/signup
+/welcome
+/request
+/createRoom
+/viewRequests
 """
 import flask
 import roomieMatter
