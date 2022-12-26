@@ -14,5 +14,5 @@ from roomieMatter import helper
 def tasks():
     """Doc string."""
     if not index.auth():
-        return flask.redirect(flask.url_for('index.welcome'))
+        return flask.redirect(flask.url_for('welcome'))
     return flask.render_template("tasks.html")
