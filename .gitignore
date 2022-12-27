@@ -80,8 +80,8 @@ AWS_ENTR_390_9_16_2022.pem
 /bin/resttest.sh
 /session.json
 /cookies.txt
-/bin/roomie_db
 /particle
 /always_forget.txt
 .DS_Store
 .editorconfig
+roomieMatter/templates/secret.html
