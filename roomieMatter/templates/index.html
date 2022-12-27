@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-    <a href="/"><p class="logo">RoomieMatter</p></a>
     {% if joined %}
         <div style="text-align: center;" id="reactEntry_indexPage" style="margin-top: 20%"></div>
         <script type="text/javascript" src="{{ url_for('static', filename='js/bundle.js') }}"></script>

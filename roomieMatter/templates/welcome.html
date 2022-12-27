@@ -1,17 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="container welcome" id = "welcome">
-    <div class = "row justify-content-center align-items-center">
-        <p class="main80">This Is RoomieMatter</p>
+    <div class="container" id="welcome" style="height:100%">
+        <div class="row align-items-center" style="height:100%">
+            <div class="col">
+                <div class= "row">
+                    <div class="col">
+                        <h1 class="welcome">This Is RoomieMatter</h1>
+                    </div>
+                </div>
+                <div class="row mx-auto" style="width:50%">
+                    <div class="col-lg-6 text-center gy-2 gx-1">
+                        <button class="btn cuteButton" onclick="window.location.href='/signup'" style="width: 100%">
+                            Signup
+                        </button>
+                    </div>
+                    <div class="col-lg-6 text-center gy-2 gx-1">
+                        <button class="btn cuteButton" onclick="window.location.href='/login'" style="width: 100%">
+                            Login
+                        </button>
+                    </div>
+                </div>  
+            </div>     
+        </div>
     </div>
-    <br>
-    <span style="text-align: center">
-        <form action="/signup" method="get" enctype="multipart/form-data">
-            <input class="cuteButton" type="submit" name="signup" value="signup"/>
-        </form>
-        <form action="/login" method="get" enctype="multipart/form-data" style="margin-top: 5px">
-            <input class="cuteButton" type="submit" name="login" value="login"/>
-        </form>
-    </span>
 {% endblock %}
 
