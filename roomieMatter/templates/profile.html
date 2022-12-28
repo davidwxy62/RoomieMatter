@@ -75,7 +75,7 @@
         }
         widths = addvector(label_widths, value_widths)
         let maxWidth = Math.max(...widths);
-        let allowed_space = $(window).width() * 0.375;
+        let allowed_space = $(window).width() * 0.375 - 50;
         if (maxWidth > allowed_space){  // one column
             $(".col-profile").addClass("col-12");
             $(".col-profile").removeClass("col-6");
