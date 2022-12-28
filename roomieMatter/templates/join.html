@@ -5,7 +5,7 @@
         <div class="col">
             <div class= "row mx-auto">
                 <div class="col mb-lg-5 mb-md-3 mb-sm-2 mb-2">
-                    <h1 class="display-5 text-center title">Create Room</h1>
+                    <h1 class="display-5 text-center title">Join Room</h1>
                 </div>
             </div>
             <div class="row mx-auto text-center">
@@ -13,11 +13,12 @@
                     {% if error %}
                         <p class="error">{{error}}</p>
                     {% endif %}
-                    <form action="/createroom" method="post" enctype="multipart/form-data">
+                    <form action="/join" method="post" enctype="multipart/form-data">
                         <div class="form-group pb-2">
                             <input id="username" class="cuteForm" type="text" name="roomname" placeholder="Room Name" autofocus required/>
                         </div>
-                        <input class="cuteButton" type="submit" value="Create"/>
+                        <input class="cuteButton" type="submit" value="Request"/>
+                        <input type="hidden" name="operation" value="login"/>
                     </form>
                 </div>
             </div>

@@ -56,9 +56,9 @@ class StatusButton extends React.Component {
     render() {
         const { status, name } = this.state;
         return (
-            <div className="margin_top_27">
-                <span className="roomie fontWeight1000">{name} - </span>
-            <button className="statusButton" onClick={() => this.handleClick()}>
+            <div className="col-6">
+                <span className="display-6 self">{name} - </span>
+                <button className="cuteButton mb-2" onClick={() => this.handleClick()}>
                 {status}
             </button>
             </div>
@@ -159,9 +159,11 @@ class RoomieList extends React.Component {
         }
         return (
                 roomies.map((roomie) => (
+                    <ul>
                         <li key={roomie.name} className="center roomie fontWeight1000">
                             <span>{roomie.name} - {roomie.status}</span>
                         </li>
+                    </ul>
                 ))
         );
     }

@@ -28,12 +28,23 @@ def show_index():
     """Display / route."""
     if not auth():
         return flask.redirect(flask.url_for('welcome'))
-    context = {}
-    context['joined'] = db.is_joined_db(flask.session['username'])
-    context["has_pending_requests"] = db.has_pending_requests_db(flask.session['username'])
     if flask.session.get("username", None) == "mh988":
         return flask.render_template("secret.html", **context)
+    joined = db.is_joined_db(flask.session['username'])
+    room_requested = db.join_requested_db(flask.session['username'])
+    if not joined and not room_requested:
+        return flask.redirect(flask.url_for('start'))
+    context = {}
+    context['has_pending_requests'] = db.has_pending_requests_db(flask.session['username'])
+    context['room_requested'] = room_requested
     return flask.render_template("index.html", **context)
+
+@roomieMatter.app.route('/start')
+def start():
+    """For users to join/create a room."""
+    if not auth():
+        return flask.redirect(flask.url_for('welcome'))
+    return flask.render_template("start.html")
 
 @roomieMatter.app.route('/about')
 def about():
@@ -58,21 +69,22 @@ def welcome():
     return flask.render_template("welcome.html", **context)
 
 
-@roomieMatter.app.route('/request', methods=['GET', 'POST'])
-def request():
+@roomieMatter.app.route('/join', methods=['GET', 'POST'])
+def join():
     """Roomie requests."""
     if not auth():
         return flask.redirect(flask.url_for('welcome'))
     context = {}
     context["username"] = flask.session['username']
     if flask.request.method == 'GET':
-        return flask.render_template("request.html", **context)
+        return flask.render_template("join.html", **context)
     if flask.request.method == 'POST':
         form = flask.request.form
         roomname = form['roomname']
         if db.request_db(flask.session['username'], roomname):
             return flask.redirect(flask.url_for('show_index'))
-        return flask.redirect(flask.url_for('request'))
+        context = {'error': 'Check your spelling and try again.'}
+        return flask.render_template('join.html', **context)
 
 
 @roomieMatter.app.route('/createroom', methods=['GET', 'POST'])

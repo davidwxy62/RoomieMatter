@@ -735,3 +735,20 @@ def change_profile_db(form, username):
         return "Room name already taken"
     return None
 
+
+def join_requested_db(username):
+    """Return the room a user has requested to join."""
+    connection = get_db()
+
+
+    cur = connection.execute(
+        "SELECT roomname "
+        "FROM requests INNER JOIN rooms Inner JOIN users "
+        "ON requests.roomId = rooms.id AND requests.senderId = users.id "
+        "WHERE users.username = ?",
+        (username, )
+    )
+    room = cur.fetchone()
+    if not room:
+        return None
+    return room['roomname']

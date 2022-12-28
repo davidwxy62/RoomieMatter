@@ -1,20 +1,31 @@
 {% extends "base.html" %}
 {% block content %}
-    {% if joined %}
-        <div style="text-align: center;" id="reactEntry_indexPage" style="margin-top: 20%"></div>
-        <script type="text/javascript" src="{{ url_for('static', filename='js/bundle.js') }}"></script>
-        {% if has_pending_requests %}
-            <form class="center" action="/viewrequests" method="get" enctype="multipart/form-data" style="margin-top: 30px">
-                <input class="cuteButton" type="submit" name="view" value="View Join Requests"/>
-            </form>
-        {% endif %}
-    {% else %}
-        <form action="/request" method="get" enctype="multipart/form-data" class="main80" style="margin-top:20%">
-            <input class="cuteButton" type="submit" value="Request to join a room"/>
-        </form>
-        <form action="/createroom" method="get" enctype="multipart/form-data" style="text-align:center; margin-top:20px">
-            <input class="cuteButton" type="submit" value="Create a room"/>
+
+{% if room_requested %}
+    <div class="container h-100">
+        <div class="row align-items-center h-100">
+            <h1 class="display-1 text-center message">Awaiting approval from {{room_requested}}...</h1>
+        </div>
+    </div>
+{% else %}
+    <div class="container h-100">
+        <div class="row align-items-center h-100">
+            <div class="col">
+                <div class= "row mx-auto">
+                    <div class="col">
+                        <div class="text-center" id="reactEntry_indexPage"></div>
+                        <script type="text/javascript" src="{{ url_for('static', filename='js/bundle.js') }}"></script>
+                    </div>
+                </div>
+            </div>     
+        </div>
+    </div>
+    {% if has_pending_requests %}
+        <form class="center" action="/viewrequests" method="get" enctype="multipart/form-data" style="margin-top: 30px">
+            <input class="cuteButton" type="submit" name="view" value="View Join Requests"/>
         </form>
     {% endif %}
+{% endif %}
+
 {% endblock %}
 

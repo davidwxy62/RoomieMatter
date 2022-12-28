@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container h-100">
+    <div class="row align-items-center h-100">
+        <div class="col">
+            <div class= "row mx-auto">
+                <div class="col">
+                    <h1 class="display-1 text-center title">Let's Get Started</h1>
+                </div>
+            </div>
+            <div class="row mx-auto" style="width:50%">
+                <div class="col-lg-6 text-center gy-2 gx-1">
+                    <button class="btn cuteButton w-100" onclick="window.location.href='/join'">Join Room</button>
+                </div>
+                <div class="col-lg-6 text-center gy-2 gx-1">
+                    <button class="btn cuteButton w-100" onclick="window.location.href='/createroom'">Create Room</button>
+                </div>
+            </div>  
+        </div>     
+    </div>
+</div>
+{% endblock %}

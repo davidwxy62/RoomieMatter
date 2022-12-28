@@ -26,6 +26,16 @@ body{
     background-color:#497aa6;
 }
 
+input {
+    width: 100%;
+    border: none;
+}
+
+::placeholder {
+font: avenir;
+font-size: 24px;
+opacity: 1;
+}
 
 @media all and (min-width: 992px) {
 	.navbar .nav-item .dropdown-menu{ display:none; }
@@ -83,11 +93,21 @@ body{
     border-radius: 8px;
 }
 
+.cuteButton:hover{
+    background-color: #0099ff;
+    color: white;
+}
+
 .roomie {
     font-family: avenir;
-    font-size: 30px;
     color: white;
-    text-align: center;
+    font-weight: bold;
+}
+
+.self {
+    font-family: avenir;
+    color: white;
+    font-weight: bolder;
 }
 
 .top_right {
@@ -209,4 +229,10 @@ html, body {
 .title {
     font-family: impact;
     color:white;
+}
+
+.message {
+    font-family: avenir;
+    color:white;
+    font-weight: bold;
 }
