@@ -1,5 +1,4 @@
 #!/bin/bash
-# roomiedb
 # Stop on errors
 set -Eeuo pipefail
 # Sanity check command line options

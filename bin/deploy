@@ -1,0 +1,21 @@
+#!/bin/bash
+# Stop on errors
+set -Eeuo pipefail
+# Sanity check command line options
+usage() {
+    echo "Usage: $0 [-react]"
+}
+if [ $# -gt 1 ]; then
+    echo "Error: too many arguments"
+    usage
+    exit 1
+fi
+if [ $# -eq 1 ] && [ $1 == "-react" ]; then
+    npx webpack
+elif [ $# -eq 1 ]; then
+    echo "Error: invalid argument"
+    usage
+    exit 1
+fi
+pkill -f gunicorn
+gunicorn -b localhost:8000 -w 2 -D roomieMatter:app
