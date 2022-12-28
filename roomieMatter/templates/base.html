@@ -34,33 +34,41 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <!--        Try justify-content-start, justify-content-end or justify-content-between, justify-content-around to see different layout styles for the navigation.-->
-            <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
-                <ul class="navbar-nav mx-auto ">
+            <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+                <ul class="navbar-nav">
                     <li class="nav-item mx-auto">
                         <a class="nav-link page-scroll" href="/about">About</a>
                     </li>
+                </ul>
+                <ul class="navbar-nav">
                     <li class="nav-item mx-auto">
                         <a class="nav-link page-scroll" href="/">Room</a>
                     </li>
+                </ul>
+                <ul class="navbar-nav">
                     <li class="nav-item mx-auto">
                         <a class="nav-link page-scroll" href="/tasks">Tasks</a>
                     </li>
+                </ul>
+                <ul class="navbar-nav">
                     <li class="nav-item mx-auto">
                         <a class="nav-link page-scroll" href="/money">Money</a>
                     </li>
                     <li class="nav-item dropdown mx-auto">
                         <a class="nav-link page-scroll dropdown-toggle" href="#" data-bs-toggle="dropdown"> Schedule </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/schedule"> shower</a></li>
-                                <li><a class="dropdown-item" href="/schedule"> laundry</a></li>
-                                <li><a class="dropdown-item" href="/schedule"> cooking</a></li>
-                            </ul>
+                            <div class="dropdown-menu mx-auto">
+                                <a class="dropdown-item" href="/schedule" class="mx-auto">shower</a>
+                                <a class="dropdown-item" href="/schedule" class="mx-auto">laundry</a>
+                                <a class="dropdown-item" href="/schedule" class="mx-auto">cooking</a>
+                            </div>
                     </li>
+                </ul>
+                <ul class="navbar-nav">
                     <li class="nav-item mx-auto">
                         <a class="nav-link page-scroll" href="/profile">Account</a>
                     </li>
-        
                 </ul>
+        
         
                 <!-- <ul class="navbar-nav flex-row"> -->
                     <!--Add any extra nav items to the-->
