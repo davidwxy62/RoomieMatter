@@ -2,15 +2,15 @@
 {% block script %}
     <script>
         window.onbeforeunload = function() {
-            sessionStorage.setItem("username", $('#username').val());
+            sessionStorage.setItem("signup_username", $('#username').val());
             sessionStorage.setItem("name", $('#name').val());
             sessionStorage.setItem("email", $('#email').val());
             sessionStorage.setItem("password1", $('#password1').val());
             sessionStorage.setItem("password2", $('#password2').val());
         }
         window.onload = function() {
-            let username = sessionStorage.getItem("username");
-            if (username !== null) $('#username').val(username);
+            let signup_username = sessionStorage.getItem("signup_username");
+            if (username !== null) $('#username').val(signup_username);
             let name = sessionStorage.getItem("name");
             if (name !== null) $('#name').val(name);
             let email = sessionStorage.getItem("email");
@@ -47,10 +47,10 @@
                             <input id="email" class="cuteForm" type="text" name="email" placeholder="Email" required/>
                         </div>
                         <div class="form-group pb-2">
-                            <input id="password1" class ="cuteForm" type="password" name="password1" placeholder="Password" required/>
+                            <input id="password1" class ="cuteForm" type="password" name="password1" placeholder="Password" onfocus="this.value=''" required/>
                         </div>
                         <div class="form-group pb-2">
-                            <input id="password2" class ="cuteForm" type="password" name="password2" placeholder="Re-enter Password" required/>
+                            <input id="password2" class ="cuteForm" type="password" name="password2" placeholder="Re-enter Password" onfocus="this.value=''" required/>
                         </div>
                         <input class="cuteButton" type="submit" value="Signup"/>
                         <input type="hidden" name="operation" value="signup"/>

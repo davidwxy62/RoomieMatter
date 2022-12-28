@@ -98,16 +98,34 @@ opacity: 1;
     color: white;
 }
 
+.dangerButton{
+    background-color: #a30808 !important;
+    color: white;
+}
+
 .roomie {
     font-family: avenir;
     color: white;
+}
+
+.bold {
     font-weight: bold;
+}
+
+.bolder {
+    font-weight: bolder;
 }
 
 .self {
     font-family: avenir;
     color: white;
     font-weight: bolder;
+}
+
+.text-reg {
+    font-family: avenir;
+    font-weight: 1000;
+    color:white;
 }
 
 .top_right {

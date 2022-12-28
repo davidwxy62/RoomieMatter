@@ -1,36 +1,96 @@
 {% extends "base.html" %}
 {% block content %}
-        <p class="main80" style="margin-top: 15%">Your Profile</p>
+<div class="container h-100 mx-auto">
+    <div id="profile" class="row align-items-center h-100 mx-auto">
+        <div class="col">
+            <div class= "row mx-auto">
+                <div class="col mb-4">
+                    <h1 class="display-5 text-center title">Profile</h1>
+                </div>
+            </div>
+            <div class="row mx-auto">
+                <div class="col-profile mb-3 text-left display-6 text-reg">
+                    <span id="label-username">Username: </span>
+                    <span id="value-username" class="bold">{{username}}</span>
+                </div>
+                <div class="col-profile mb-3 text-left display-6 text-reg">
+                    <span id="label-name">Name: </span>
+                    <span id="value-name" class="bold">{{name}}</span>
+                </div>
+            </div>
+            <div class="row mx-auto">
+                <div class="col-profile mb-3 text-left display-6 text-reg">
+                    <span id="label-email">Email: </span>
+                    <span id="value-email" class="bold">{{email}}</span>
+                </div>
+                <div class="col-profile mb-3 text-left display-6 text-reg">
+                    <span id="label-room">Room: </span>
+                    <span id="value-room" class="bold">{{room}}</span>
+                </div>
+            </div>
+            <div class="row mx-auto">
+                <div class="col-btn mb-2 px-1">
+                    <button class="btn cuteButton w-100" onclick="window.location.href='/changeProfile'">Edit</button>
+                </div>
+                <form class="col-btn mb-2 px-1" action="/accounts/logout" method="post">
+                    <button class="btn cuteButton w-100" type="submit">Logout</button>
+                </form>
+                <form class="col-btn mb-2 px-1" action="/accounts/" method="post">
+                    <button class="btn dangerButton cuteButton w-100">Exit</button>
+                    <input type="hidden" name="operation" value="exitRoom"/>
+                </form>
+            </div>
+        </div>     
+    </div>
+</div>
+{% endblock %}
+{% block style %}
+<style> 
+    .text-reg {font-size:3.9vw;}
+    @media (min-width: 720px) {
+        .text-reg {font-size:27.36px;}
+    }
 
-        <p class="roomie">
-            <span style="font-weight: 1000">Username: </span>
-            {{username}}
-        </p>
-
-        <p class="roomie">
-            <span style="font-weight: 1000">Name: </span>
-            {{name}}
-        </p>
-
-        <p class="roomie">
-            <span style="font-weight: 1000">Email: </span>
-            {{email}}
-        </p>
-
-        <p class="roomie">
-            <span style="font-weight: 1000">Room: </span>
-            {{room}}
-        </p>
-
-        <form class="center" action="/changeProfile" method="get" enctype="multipart/form-data">
-            <input class="logout" type="submit" value="Change"/>
-        </form>
-        <form class="center" action="/accounts/logout" method="post" enctype="multipart/form-data">
-            <input class="logout" type="submit" value="Logout"/>
-        </form>
-        <form class="top_right" style="top: 20px" action="/accounts/" method="post" enctype="multipart/form-data">
-            <input class="logout" type="submit" name="exit" value="Exit Room"/>
-            <input type="hidden" name="operation" value="exitRoom"/>
-        </form>
-
+    .display-5 {font-size:5.8vw;}
+    @media (min-width: 720px) {
+        .display-5 {font-size:46.48px;}
+    }
+</style>
+{% endblock %}
+{% block script %}
+<script>  // takes into consideration the width of the widest field
+        $(document).ready(function(){
+            resize_callback();
+            $(window).resize(resize_callback);
+        });
+    function resize_callback(){
+        let label_widths = $( "span[id|='label']" ).map(function(){
+            return $(this).width()
+        }).get();
+        let value_widths = $( "span[id|='value']" ).map(function(){
+            return $(this).width()
+        }).get();
+        function addvector(a,b){
+            return a.map((e,i) => e + b[i]);
+        }
+        widths = addvector(label_widths, value_widths)
+        let maxWidth = Math.max(...widths);
+        let allowed_space = $(window).width() * 0.375;
+        if (maxWidth > allowed_space){  // one column
+            $(".col-profile").addClass("col-12");
+            $(".col-profile").removeClass("col-6");
+            $("#profile").css("width", maxWidth+60);
+            $(".col-btn").addClass("col-12");
+            $(".col-btn").removeClass("col-4");
+        } else {  // two columns
+            $(".col-profile").addClass("col-6");
+            $(".col-profile").removeClass("col-12");
+            $("#profile").css("width", maxWidth*2+100);
+            $(".col-btn").addClass("col-4");
+            $(".col-btn").removeClass("col-12");
+        }
+    }
+    resize_callback();
+    addEventListener("resize", (event) => {resize_callback();});
+</script>
 {% endblock %}
