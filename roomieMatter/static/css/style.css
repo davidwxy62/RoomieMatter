@@ -18,8 +18,11 @@ body{
 .dropdown-item{
     font-family: avenir-black;
     color: white;
+    text-align: center;
 }
-
+.dropdown-menu li a {
+    text-align: center;
+}
 .dropdown-item:hover{
     font-family: avenir-black;
     color: #fccf6e;
