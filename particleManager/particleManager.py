@@ -1,6 +1,5 @@
 """RoomieButton Manager."""
 import os
-import tempfile
 import logging
 import sys
 import json
@@ -98,9 +97,8 @@ class Manager:
 @click.option("--port", "port", default=6000)
 @click.option("--logfile", "logfile", default=None)
 @click.option("--loglevel", "loglevel", default="info")
-def main(host, port, logfile, loglevel, shared_dir):
+def main(host, port, logfile, loglevel):
     """Run Manager."""
-    tempfile.tempdir = shared_dir
     formatter = logging.Formatter(
         f"Manager {host}:{port} [%(levelname)s] %(message)s"
     )
