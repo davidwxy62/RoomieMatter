@@ -34,7 +34,7 @@ for arg in "$@"; do
             pkill -f manager.py
             rm -rf var/log/manager.log
             mkdir var/log
-            myip = $(dig +short myip.opendns.com @resolver1.opendns.com)
+            myip=$(dig +short myip.opendns.com @resolver1.opendns.com)
             python3 particleManager/particleManager.py --host myip --port 1002 --logfile var/log/manager.log & sleep 2
             echo "Particle manager started"
             ;;
