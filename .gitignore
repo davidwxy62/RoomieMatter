@@ -85,3 +85,4 @@ AWS_ENTR_390_9_16_2022.pem
 .DS_Store
 .editorconfig
 roomieMatter/templates/secret.html
+bin/connect

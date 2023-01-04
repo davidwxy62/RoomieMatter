@@ -3,19 +3,37 @@
 set -Eeuo pipefail
 # Sanity check command line options
 usage() {
-    echo "Usage: $0 [-react]"
+    echo "Usage: $0 [--react] [--flask] [--manager]"
 }
-if [ $# -gt 1 ]; then
+if [ $# -gt 3 ]; then
     echo "Error: too many arguments"
     usage
     exit 1
 fi
-if [ $# -eq 1 ] && [ $1 == "-react" ]; then
-    npx webpack
-elif [ $# -eq 1 ]; then
-    echo "Error: invalid argument"
-    usage
-    exit 1
-fi
-pkill -f gunicorn
-gunicorn -b localhost:8000 -w 2 -D roomieMatter:app
+
+for arg in "$@"; do
+    if [ $arg != "--react" ] && [ $arg != "--flask" ] && [ $arg != "--manager" ]; then
+        echo "Error: invalid argument"
+        usage
+        exit 1
+    fi
+done
+
+for arg in "$@"; do
+    case $arg in
+        --react)
+            npx webpack
+            ;;
+        -flask)
+            pkill -f gunicorn
+            gunicorn -b localhost:8000 -w 2 -D roomieMatter:app
+            ;;
+        -manager)
+            pkill -f manager.py
+            rm -rf var/log/manager.log
+            mkdir var/log
+            myip = $(dig +short myip.opendns.com @resolver1.opendns.com)
+            python3 manager.py --host myip --port 1002 --logfile var/log/manager.log & sleep 2
+            ;;
+    esac
+done
