@@ -37,7 +37,6 @@ class Manager:
             while True:
                 conn = mng_sock.accept()[0]
                 self.run_tcp(conn)
-                time.sleep(0.1)
 
     def run_tcp(self, conn: socket.socket):
         """Listens for messages."""

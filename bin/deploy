@@ -31,11 +31,10 @@ for arg in "$@"; do
             echo "Flask server started"
             ;;
         -manager)
-            pkill -f manager.py
-            rm -rf var/log/manager.log
-            mkdir var/log
-            myip=$(dig +short myip.opendns.com @resolver1.opendns.com)
-            python3 particleManager/particleManager.py --host myip --port 1002 --logfile var/log/manager.log & sleep 2
+            pkill -f particleManager.py || true
+            rm -rf var/log/particleManager.log || true
+            mkdir var/log || true
+            sudo python3 particleManager/particleManager.py --host 0.0.0.0 --port 1002 --logfile var/log/particleManager.log & sleep 2
             echo "Particle manager started"
             ;;
     esac
