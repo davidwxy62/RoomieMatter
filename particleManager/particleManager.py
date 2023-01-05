@@ -29,7 +29,7 @@ class Manager:
         #     name="mnger-heartbeat"
         # )
         # udp_thread.start()
-
+        LOGGER.info("Manager started")
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as mng_sock:
             mng_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             mng_sock.bind((self.host, self.port))
@@ -45,6 +45,7 @@ class Manager:
                 data = conn.recv(4096)
                 if not data:    # Connection closed
                     break
+                LOGGER.info(f"Heard something on {self.port}")
                 try:
                     self.handle_message(
                         json.loads(data.decode("utf-8"))
@@ -87,7 +88,7 @@ class Manager:
 
     def handle_message(self, msg):
         """Handle a message from a device."""
-        LOGGER.info("Received message: %s", msg)
+        LOGGER.info(f"Valid JSON: {msg}")
 
 
 

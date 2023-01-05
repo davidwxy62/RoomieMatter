@@ -86,3 +86,4 @@ AWS_ENTR_390_9_16_2022.pem
 .editorconfig
 roomieMatter/templates/secret.html
 bin/connect
+bin/meow

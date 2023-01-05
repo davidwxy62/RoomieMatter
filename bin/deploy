@@ -25,12 +25,12 @@ for arg in "$@"; do
             npx webpack
             echo "React app built"
             ;;
-        -flask)
+        --flask)
             pkill -f gunicorn
             gunicorn -b localhost:8000 -w 2 -D roomieMatter:app
             echo "Flask server started"
             ;;
-        -manager)
+        --manager)
             pkill -f particleManager.py || true
             rm -rf var/log/particleManager.log || true
             mkdir var/log || true
