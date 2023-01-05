@@ -5,8 +5,8 @@ set -Eeuo pipefail
 usage() {
     echo "Usage: $0 [--react] [--flask] [--manager]"
 }
-if [ $# -gt 3 ]; then
-    echo "Error: too many arguments"
+if [ $# -gt 3 ] || [ $# -eq 0 ]; then
+    echo "Error: 1 - 3 arguments required"
     usage
     exit 1
 fi
@@ -34,7 +34,8 @@ for arg in "$@"; do
             pkill -f particleManager.py || true
             rm -rf var/log/particleManager.log || true
             mkdir var/log || true
-            sudo python3 particleManager/particleManager.py --host 0.0.0.0 --port 1002 --logfile var/log/particleManager.log & sleep 2
+            sudo python3 particleManager/particleManager.py --host 172.31.28.171 --port 1002 --logfile var/log/particleManager.log
+            sleep 2
             echo "Particle manager started"
             ;;
     esac

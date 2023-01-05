@@ -21,22 +21,18 @@ class Manager:
         self.port = int(port)
 
         self.buttons = {}   # {<host>:<port> : state}
-        # self.heartbeat_dict = hb.Beatdict()
 
-        # udp_thread = Thread(
-        #     target=self.heartbeat_listen,
-        #     daemon=True,
-        #     name="mnger-heartbeat"
-        # )
-        # udp_thread.start()
         LOGGER.info("Manager started")
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as mng_sock:
             mng_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             mng_sock.bind((self.host, self.port))
             mng_sock.listen()
             while True:
+                LOGGER.info("Manager listening for connections...")
                 conn = mng_sock.accept()[0]
+                LOGGER.info("Connection accepted from %s", conn.getpeername())
                 self.run_tcp(conn)
+
 
     def run_tcp(self, conn: socket.socket):
         """Listens for messages."""
@@ -53,38 +49,6 @@ class Manager:
                 except json.JSONDecodeError:
                     continue
 
-    # def heartbeat_listen(self):
-    #     """Daemon thread listening for UDP heartbeat messages."""
-    #     LOGGER.info("Starting heartbeat listener")
-    #     with socket.socket(
-    #         socket.AF_INET,
-    #         socket.SOCK_DGRAM
-    #     ) as rec_socket:
-    #         rec_socket.setsockopt(
-    #             socket.SOL_SOCKET,
-    #             socket.SO_REUSEADDR,
-    #             1
-    #         )
-    #         rec_socket.bind((self.host, self.port))
-    #         rec_socket.settimeout(0.1)
-    #         while True:
-    #             try:
-    #                 data = rec_socket.recv(4096)
-    #             except socket.timeout:
-    #                 continue
-    #             # deal with data sent by worker
-    #             try:
-    #                 msg = json.loads(data.decode("utf-8"))
-    #             except ValueError:
-    #                 continue
-    #             if data:
-    #                 self.heartbeat_dict.update(
-    #                     f"{msg['worker_host']}:{msg['worker_port']}"
-    #                 )
-    #             silent = self.heartbeat_dict.extract_silent(10)
-    #             for worker in silent:
-    #                 self.workers[worker] = "dead"
-    #                 LOGGER.info("DEAD %s", worker)
 
     def handle_message(self, msg):
         """Handle a message from a device."""
