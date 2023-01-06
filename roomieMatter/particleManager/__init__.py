@@ -3,7 +3,7 @@ import roomieMatter.particleManager.particleManager
 import subprocess
 import os
 
-subprocess.run(["pkill", "-f", "particleManager.py"])
+subprocess.run(["sudo", "pkill", "-f", "particleManager.py"])
 if os.path.exists("var/log/particleManager.log"):
     os.remove("var/log/particleManager.log")
 if not os.path.exists("var/log"):
