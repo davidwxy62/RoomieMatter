@@ -1,9 +1,6 @@
 """Helper functions here and there."""
 import hashlib
-import os
-import pathlib
 import uuid
-import roomieMatter
 from roomieMatter import db
 
 def loggedIn(cookie, auth_obj):
