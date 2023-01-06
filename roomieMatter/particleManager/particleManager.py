@@ -42,6 +42,7 @@ class Manager:
                 if not data:    # Connection closed
                     break
                 LOGGER.info(f"Heard something on {self.port}")
+                LOGGER.info(f"Data received: {data}")
                 try:
                     self.handle_message(
                         json.loads(data.decode("utf-8"))

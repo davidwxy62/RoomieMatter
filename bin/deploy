@@ -30,13 +30,23 @@ for arg in "$@"; do
             gunicorn -b localhost:8000 -w 2 -D roomieMatter:app
             echo "Flask server started"
             ;;
+        *)
+            ;;
+    esac
+done
+
+for arg in "$@"; do
+    case $arg in
         --manager)
             pkill -f particleManager.py || true
             rm -rf var/log/particleManager.log || true
-            mkdir var/log || true
+            if [ ! -d "var/log" ]; then
+                mkdir var/log
+            fi
+            echo "Starting particle manager..."
             sudo python3 particleManager/particleManager.py --host 172.31.28.171 --port 1002 --logfile var/log/particleManager.log
-            sleep 2
-            echo "Particle manager started"
+            ;;
+        *)
             ;;
     esac
 done
