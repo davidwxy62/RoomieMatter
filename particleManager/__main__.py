@@ -4,8 +4,9 @@ import logging
 import json
 import socket
 import click
+import threading
+from daemon import runner
 from particleManager import db
-from particleManager import model
 
 # Configure logging
 LOGGER = logging.getLogger(__name__)
@@ -16,20 +17,17 @@ class Manager:
         """Construct a Manager and start listening for messages."""
         self.host = host
         self.port = int(port)
-
         self.buttons = {}   # { username : host }
 
+    def run(self):
         LOGGER.info("Manager started")
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as mng_sock:
             mng_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             mng_sock.bind((self.host, self.port))
             mng_sock.listen()
             while True:
-                LOGGER.info("Manager listening for connections...")
                 conn = mng_sock.accept()[0]
-                LOGGER.info("Connection accepted from %s", conn.getpeername())
                 self.run_tcp(conn)
-
 
     def run_tcp(self, conn: socket.socket):
         """Listens for messages."""
@@ -41,15 +39,23 @@ class Manager:
                 try:
                     self.handle_message(
                         json.loads(data.decode("utf-8")),
-                        conn.getpeername().ip
+                        conn.getpeername()[0]
                     )
                 except json.JSONDecodeError:
+                    LOGGER.info("Data from %s caused JSONDecodeError", conn.getpeername())
+                    LOGGER.info("Data: %s", data)
                     continue
-                except AttributeError:
-                    continue
+                # except AttributeError:
+                #     LOGGER.info("Data from %s caused AttributeError", conn.getpeername())
+                #     LOGGER.info("Data: %s", data)
+                #     continue
                 except KeyError:
+                    LOGGER.info("Data from %s caused KeyError", conn.getpeername())
+                    LOGGER.info("Data: %s", data)
                     continue
                 except UnicodeDecodeError:
+                    LOGGER.info("Data from %s caused UnicodeDecodeError", conn.getpeername())
+                    LOGGER.info("Data: %s", data)
                     continue
 
 
@@ -57,19 +63,15 @@ class Manager:
         """Handle a message from a device."""
         if msg["event"] == "register_device":
             ack = {}
-            if msg["username"] in self.buttons:
-                LOGGER.info("Duplicate registration from %s", host)
-                ack['status'] = 'error'
-                self.send_message(ack, host)
-                return
             if db.username_pwd_match_db(msg["username"], msg["password"]):
                 self.buttons[msg["username"]] = host
-                LOGGER.info("Registered %s", host)
+                LOGGER.info("Successfully registered %s:%s", host, msg["username"])
                 ack['status'] = 'success'
             else:
                 LOGGER.info("Invalid credentials from %s", host)
                 ack['status'] = 'error'
-            self.send_message(ack, host)
+            threading.Thread(target=self.send_message, args=(ack, host)).start()
+            # self.send_message(ack, host)
 
         elif msg["event"] == "particle_status_change":
             ack = {}
@@ -85,7 +87,8 @@ class Manager:
                 db.change_status_db(msg["username"])
                 LOGGER.info("%s is now %s", msg["username"], msg["new_status"])
             ack['status'] = 'success'
-            self.send_message(ack, host)
+            threading.Thread(target=self.send_message, args=(ack, host)).start()
+            # self.send_message(ack, host)
 
         elif msg["event"] == "server_status_change":
             if not db.username_hashed_pwd_match_db(msg["username"], msg["hashed_password"]):
@@ -99,7 +102,9 @@ class Manager:
                 "username": msg["username"],
                 "new_status": msg["new_status"]
             }
-            self.send_message(notice, self.buttons[msg["username"]])
+            LOGGER.info("Sending notice to %s", self.buttons[msg["username"]])
+            threading.Thread(target=self.send_message, args=(notice, self.buttons[msg["username"]])).start()
+            # self.send_message(notice, self.buttons[msg["username"]])
 
         else:
             LOGGER.info("Invalid message from %s", host)
@@ -113,12 +118,15 @@ class Manager:
                 socket.AF_INET,
                 socket.SOCK_STREAM
             ) as outbound_sock:
+                outbound_sock.settimeout(1)
                 try:
                     outbound_sock.connect((host, 27))
                     outbound_sock.sendall(
                         json.dumps(msg).encode("utf-8")
                     )
                 except ConnectionRefusedError:
+                    return
+                except socket.timeout:
                     return
 
 
@@ -140,9 +148,11 @@ def main(host, port, logfile, loglevel):
     root_logger = logging.getLogger()
     root_logger.addHandler(handler)
     root_logger.setLevel(loglevel.upper())
-    Manager(host, port)
-
+    manager = Manager(host, port)
+    daemon_runner = runner.DaemonRunner(manager)
+    daemon_runner.do_action()
 
 if __name__ == "__main__":
     main()
+
 

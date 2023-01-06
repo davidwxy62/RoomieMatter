@@ -8,7 +8,7 @@ def username_pwd_match_db(username, pwd):
 
     If the password is right, login the user.
     """
-    conn = get_db
+    conn = get_db()
     cur = conn.execute(
         "SELECT password "
         "FROM users "
@@ -16,8 +16,8 @@ def username_pwd_match_db(username, pwd):
         (username, )
     )
 
-    close_db(conn)
     user = cur.fetchone()
+    close_db(conn)
     if not user:
         return False
     return check_password(user['password'], pwd)
@@ -33,8 +33,8 @@ def get_status_db(username):
         (username, )
     )
 
-    close_db(conn)
     user = cur.fetchone()
+    close_db(conn)
     if not user:
         return None
     return user['status']
@@ -85,8 +85,8 @@ def username_hashed_pwd_match_db(username, hashed_pwd):
         "WHERE username = ?",
         (username, )
     )
-    close_db(conn)
     user = cur.fetchone()
+    close_db(conn)
     if not user:
         return False
     return user['password'] == hashed_pwd
