@@ -22,7 +22,7 @@ def accounts():
 
     if flask.request.form['operation'] == 'login':
         form = flask.request.form
-        if len(form['username'])*len(form['password']) == 0 or not db.username_pwd_match(form['username'], form['password']):
+        if len(form['username'])*len(form['password']) == 0 or not db.username_pwd_match_db(form['username'], form['password']):
             context = {"error": "Try different usernames or passwords"}
             return flask.render_template("login.html", **context)
         flask.session['username'] = form['username']

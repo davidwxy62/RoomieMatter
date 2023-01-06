@@ -19,7 +19,7 @@ def loggedIn(cookie, auth_obj):
 
     if not auth_user or not auth_pwd:
         return False
-    return db.username_pwd_match(auth_user, auth_pwd)
+    return db.username_pwd_match_db(auth_user, auth_pwd)
 
 
 def hash_password(password):

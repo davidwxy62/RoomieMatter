@@ -87,3 +87,4 @@ AWS_ENTR_390_9_16_2022.pem
 roomieMatter/templates/secret.html
 bin/connect
 bin/meow
+roomieMatter/particleManager/comm_prot.txt

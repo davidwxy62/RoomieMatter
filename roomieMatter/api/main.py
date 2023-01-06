@@ -10,7 +10,7 @@ import roomieMatter.db as db
 def particle():
     """Particle API."""
     args = flask.request.args
-    if db.username_pwd_match(args['username'], args['password']):
+    if db.username_pwd_match_db(args['username'], args['password']):
         if 'changeTo' in args:
             if db.get_status_db(args['username']) != args['changeTo']:
                 db.change_status_db(args['username'])

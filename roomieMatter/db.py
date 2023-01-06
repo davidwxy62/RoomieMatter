@@ -3,7 +3,7 @@ import flask
 from roomieMatter.model import get_db
 from roomieMatter import helper
 
-def username_pwd_match(username, pwd):
+def username_pwd_match_db(username, pwd):
     """
     Take in username and pw input from current user.
 
@@ -752,3 +752,20 @@ def join_requested_db(username):
     if not room:
         return None
     return room['roomname']
+
+
+def username_hashed_pwd_match_db(username, hashed_pwd):
+    """Check if a username and hashed password match."""
+    connection = get_db()
+
+    cur = connection
+    cur = cur.execute(
+        "SELECT password "
+        "FROM users "
+        "WHERE username = ?",
+        (username, )
+    )
+    user = cur.fetchone()
+    if not user:
+        return False
+    return user['password'] == hashed_pwd

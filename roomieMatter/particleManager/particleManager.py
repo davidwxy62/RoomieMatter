@@ -1,14 +1,10 @@
 """RoomieButton Manager."""
-import os
+"""INSECURE: This is a proof of concept. Do not use in production."""
 import logging
-import sys
 import json
-import time
 import socket
-from threading import Thread
 import click
-# import mapreduce.utils as ut
-# import mapreduce.manager.heartbeat_dict as hb
+from roomieMatter import db
 
 # Configure logging
 LOGGER = logging.getLogger(__name__)
@@ -20,7 +16,7 @@ class Manager:
         self.host = host
         self.port = int(port)
 
-        self.buttons = {}   # {<host>:<port> : state}
+        self.buttons = {}   # { username : host }
 
         LOGGER.info("Manager started")
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as mng_sock:
@@ -39,22 +35,86 @@ class Manager:
         with conn:
             while True:
                 data = conn.recv(4096)
-                if not data:    # Connection closed
+                if not data:
                     break
-                LOGGER.info(f"Heard something on {self.port}")
-                LOGGER.info(f"Data received: {data}")
                 try:
                     self.handle_message(
-                        json.loads(data.decode("utf-8"))
+                        json.loads(data.decode("utf-8")),
+                        conn.getpeername().ip
                     )
                 except json.JSONDecodeError:
                     continue
+                except AttributeError:
+                    continue
+                except KeyError:
+                    continue
+                except UnicodeDecodeError:
+                    continue
 
 
-    def handle_message(self, msg):
+    def handle_message(self, msg, host):
         """Handle a message from a device."""
-        LOGGER.info(f"Valid JSON: {msg}")
+        if msg["event"] == "register_device":
+            ack = {}
+            if msg["username"] in self.buttons:
+                LOGGER.info("Duplicate registration from %s", host)
+                ack['status'] = 'error'
+                self.send_message(ack, host)
+                return
+            if db.username_pwd_match_db(msg["username"], msg["password"]):
+                self.buttons[msg["username"]] = host
+                LOGGER.info("Registered %s", host)
+                ack['status'] = 'success'
+            else:
+                LOGGER.info("Invalid credentials from %s", host)
+                ack['status'] = 'error'
+            self.send_message(ack, host)
 
+        elif msg["event"] == "particle_status_change":
+            ack = {}
+            if not db.username_pwd_match_db(msg["username"], msg["password"]):
+                LOGGER.info("Invalid credentials from %s", host)
+                ack['status'] = 'error'
+                self.send_message(ack, host)
+                return
+            if msg["username"] not in self.buttons:
+                self.buttons[msg["username"]] = host
+                LOGGER.info("Registered %s", host)
+            if msg["new_status"] != db.get_status_db(msg["username"]):
+                db.change_status_db(msg["username"])
+                LOGGER.info("%s is now %s", msg["username"], msg["new_status"])
+            ack['status'] = 'success'
+            self.send_message(ack, host)
+
+        elif msg["event"] == "server_status_change":
+            if not db.username_hashed_pwd_match_db(msg["username"], msg["hashed_password"]):
+                LOGGER.info("Invalid credentials from %s", host)
+                return
+            if msg["username"] not in self.buttons:
+                LOGGER.info("Unregistered device %s", host)
+                return
+            notice = {
+                "event": "server_status_change",
+                "username": msg["username"],
+                "new_status": msg["new_status"]
+            }
+            self.send_message(notice, self.buttons[msg["username"]])
+
+            
+            
+    def send_message(self, msg, host):
+        """Send a message to a device."""
+        with socket.socket(
+                socket.AF_INET,
+                socket.SOCK_STREAM
+            ) as outbound_sock:
+                try:
+                    outbound_sock.connect((host, 27))
+                    outbound_sock.sendall(
+                        json.dumps(msg).encode("utf-8")
+                    )
+                except ConnectionRefusedError:
+                    return
 
 
 @click.command()
