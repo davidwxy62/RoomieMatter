@@ -18,13 +18,6 @@ app.config.from_envvar('ROOMIEMATTER_SETTINGS', silent=True)
 import roomieMatter.views  # noqa: E402  pylint: disable=wrong-import-position
 import roomieMatter.model  # noqa: E402  pylint: disable=wrong-import-position
 import roomieMatter.api  # noqa: E402  pylint: disable=wrong-import-position
-import roomieMatter.particleManager  # noqa: E402  pylint: disable=wrong-import-position
-import subprocess
-import os
+# import roomieMatter.particleManager  # noqa: E402  pylint: disable=wrong-import-position
 
-subprocess.run(["pkill", "-f", "particleManager.py"])
-subprocess.run(["rm", "-rf", "var/log/particleManager.log"])
-if not os.path.exists("var/log"):
-    os.mkdir("var/log")
-subprocess.Popen(["sudo", "python3", "roomieMatter/particleManager/particleManager.py", "--host", 
-                  "172.31.28.171", "--port", "1002", "--logfile", "var/log/particleManager.log"])
+
