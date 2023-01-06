@@ -4,7 +4,9 @@ import logging
 import json
 import socket
 import click
-from roomieMatter import db
+import atexit
+from particleManager import db
+from particleManager import model
 
 # Configure logging
 LOGGER = logging.getLogger(__name__)
@@ -139,4 +141,6 @@ def main(host, port, logfile, loglevel):
 
 
 if __name__ == "__main__":
+    atexit.register(model.close_db)
     main()
+
