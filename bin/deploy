@@ -3,10 +3,16 @@
 set -Eeuo pipefail
 # Sanity check command line options
 usage() {
-    echo "Usage: $0 [--flask]"
+    echo "Usage: $0 [--flask] [--react] [--manager]"
 }
-if [ $# -gt 1 ]; then
+if [ $# -gt 4 ]; then
     echo "Error: too many arguments"
+    usage
+    exit 1
+fi
+
+if [ $# -eq 0 ]; then
+    echo "Error: at least one argument required"
     usage
     exit 1
 fi
