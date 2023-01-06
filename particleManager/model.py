@@ -20,13 +20,12 @@ def get_db():
     Flask docs:
     https://flask.palletsprojects.com/en/1.0.x/appcontext/#storing-data
     """
-    if 'sqlite_db' not in flask.g:
-        db_filename = config.DATABASE_FILENAME
-        conn = sqlite3.connect(str(db_filename))
-        conn.row_factory = dict_factory
-        # Foreign keys have to be enabled per-connection.  This is an sqlite3
-        # backwards compatibility thing.
-        conn.execute("PRAGMA foreign_keys = ON")
+    db_filename = config.DATABASE_FILENAME
+    conn = sqlite3.connect(str(db_filename))
+    conn.row_factory = dict_factory
+    # Foreign keys have to be enabled per-connection.  This is an sqlite3
+    # backwards compatibility thing.
+    conn.execute("PRAGMA foreign_keys = ON")
     return conn
 
 

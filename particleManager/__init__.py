@@ -1,4 +1,3 @@
-import particleManager.particleManager
 import particleManager.config
 import particleManager.helper
 import particleManager.model
