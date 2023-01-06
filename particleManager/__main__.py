@@ -4,7 +4,6 @@ import logging
 import json
 import socket
 import click
-import atexit
 from particleManager import db
 from particleManager import model
 
@@ -102,6 +101,10 @@ class Manager:
             }
             self.send_message(notice, self.buttons[msg["username"]])
 
+        else:
+            LOGGER.info("Invalid message from %s", host)
+            LOGGER.info(msg)
+
             
             
     def send_message(self, msg, host):
@@ -141,6 +144,5 @@ def main(host, port, logfile, loglevel):
 
 
 if __name__ == "__main__":
-    atexit.register(model.close_db)
     main()
 

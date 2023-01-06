@@ -42,7 +42,7 @@ for arg in "$@"; do
         --manager)
             sudo pkill -f particleManager.py
             if [ -f var/log/particleManager.log ]; then
-                rm var/log/particleManager.log
+                rm -f var/log/particleManager.log
             fi
             if [ ! -d var/log ]; then
                 mkdir var/log
