@@ -18,5 +18,6 @@ app.config.from_envvar('ROOMIEMATTER_SETTINGS', silent=True)
 import roomieMatter.views  # noqa: E402  pylint: disable=wrong-import-position
 import roomieMatter.model  # noqa: E402  pylint: disable=wrong-import-position
 import roomieMatter.api  # noqa: E402  pylint: disable=wrong-import-position
+import roomieMatter.particleManager  # noqa: E402  pylint: disable=wrong-import-position
 
 
