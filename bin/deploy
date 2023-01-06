@@ -11,12 +11,18 @@ if [ $# -gt 1 ]; then
     exit 1
 fi
 
-
 for arg in "$@"; do
     case $arg in
+        --flask)
+            pkill -f gunicorn
+            gunicorn -b localhost:8000 -w 2 -D roomieMatter:app
+            echo "Flask server started"
+            ;;
         --react)
             npx webpack
             echo "React app built"
+            ;;
+        --manager)
             ;;
         *)
             echo "Error: invalid argument"
@@ -25,6 +31,26 @@ for arg in "$@"; do
     esac
 done
 
-pkill -f gunicorn
-gunicorn -b localhost:8000 -w 2 -D roomieMatter:app
-echo "Flask server started"
+for arg in "$@"; do
+    case $arg in
+        --manager)
+            sudo pkill -f particleManager.py
+            if [ -f var/log/particleManager.log ]; then
+                rm var/log/particleManager.log
+            fi
+            if [ ! -d var/log ]; then
+                mkdir var/log
+            fi
+            echo "Starting Particle manager ..."
+            sudo python3 roomieMatter/particleManager/particleManager.py --host 172.31.28.171 --port 1002 --logfile var/log/particleManager.log
+            ;;
+        --flask)
+            ;;
+        --react)
+            ;;
+        *)
+            echo "Error: invalid argument"
+            usage
+            ;;
+    esac
+done
