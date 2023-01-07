@@ -6,6 +6,7 @@ import socket
 import click
 import threading
 from daemon import runner
+from particleManager import config
 from particleManager import db
 
 # Configure logging
@@ -130,13 +131,12 @@ class Manager:
                     return
 
 
-@click.command()
-@click.option("--host", "host", default="localhost")
-@click.option("--port", "port", default=6000)
-@click.option("--logfile", "logfile", default=None)
-@click.option("--loglevel", "loglevel", default="info")
-def main(host, port, logfile, loglevel):
+def main():
     """Run Manager."""
+    host = config.SERVER_HOST
+    port = config.SERVER_PORT
+    logfile = config.LOG_FILE
+    loglevel = config.LOG_LEVEL
     formatter = logging.Formatter(
         f"Manager {host}:{port} [%(levelname)s] %(message)s"
     )

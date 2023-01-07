@@ -3,7 +3,7 @@
 set -Eeuo pipefail
 # Sanity check command line options
 usage() {
-    echo "Usage: $0 [--flask] [--react] [--manager]"
+    echo "Usage: $0 [--flask] [--react] [--manager start|stop|restart]"
 }
 if [ $# -gt 4 ]; then
     echo "Error: too many arguments"
@@ -30,29 +30,41 @@ for arg in "$@"; do
             ;;
         --manager)
             ;;
-        *)
+        start)
+            ;;
+        stop)
+            ;;
+        restart)
+            ;;
             echo "Error: invalid argument"
             usage
             ;;
     esac
 done
 
+MANAGER=0
+
 for arg in "$@"; do
     case $arg in
         --manager)
-            sudo pkill -f particleManager.py
-            if [ -f var/log/particleManager.log ]; then
-                rm -f var/log/particleManager.log
-            fi
-            if [ ! -d var/log ]; then
-                mkdir var/log
-            fi
-            echo "Starting Particle manager ..."
-            sudo python3 -m particleManager --host 172.31.28.171 --port 1002 --logfile var/log/particleManager.log --loglevel debug
+            MANAGER=1
             ;;
         --flask)
             ;;
         --react)
+            ;;
+        start)
+            if [ $MANAGER -eq 1 ]; then
+                sudo pkill -f particleManager.py
+                if [ -f var/log/particleManager.log ]; then
+                    rm -f var/log/particleManager.log
+                fi
+                if [ ! -d var/log ]; then
+                    mkdir var/log
+                fi
+                echo "Starting Particle manager ..."
+                sudo python3 -m particleManager start
+            fi
             ;;
         *)
             echo "Error: invalid argument"
