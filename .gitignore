@@ -88,3 +88,4 @@ roomieMatter/templates/secret.html
 bin/connect
 bin/meow
 particleManager/comm_prot.txt
+notes

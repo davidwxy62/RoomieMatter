@@ -40,7 +40,7 @@ done
 for arg in "$@"; do
     case $arg in
         --manager)
-            sudo pkill -f particleManager.py
+            sudo pkill -f particleManager || true
             if [ -f var/log/particleManager.log ]; then
                 rm -f var/log/particleManager.log
             fi
@@ -48,7 +48,9 @@ for arg in "$@"; do
                 mkdir var/log
             fi
             echo "Starting Particle manager ..."
+            tmux new -s managerWindow 
             sudo python3 -m particleManager
+            
             ;;
         --flask)
             ;;

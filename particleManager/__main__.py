@@ -45,10 +45,6 @@ class Manager:
                     LOGGER.info("Data from %s caused JSONDecodeError", conn.getpeername())
                     LOGGER.info("Data: %s", data)
                     continue
-                # except AttributeError:
-                #     LOGGER.info("Data from %s caused AttributeError", conn.getpeername())
-                #     LOGGER.info("Data: %s", data)
-                #     continue
                 except KeyError:
                     LOGGER.info("Data from %s caused KeyError", conn.getpeername())
                     LOGGER.info("Data: %s", data)
@@ -71,14 +67,13 @@ class Manager:
                 LOGGER.info("Invalid credentials from %s", host)
                 ack['status'] = 'error'
             threading.Thread(target=self.send_message, args=(ack, host)).start()
-            # self.send_message(ack, host)
 
         elif msg["event"] == "particle_status_change":
             ack = {}
             if not db.username_pwd_match_db(msg["username"], msg["password"]):
                 LOGGER.info("Invalid credentials from %s", host)
                 ack['status'] = 'error'
-                self.send_message(ack, host)
+                threading.Thread(target=self.send_message, args=(ack, host)).start()
                 return
             if msg["username"] not in self.buttons:
                 self.buttons[msg["username"]] = host
@@ -88,7 +83,6 @@ class Manager:
                 LOGGER.info("%s is now %s", msg["username"], msg["new_status"])
             ack['status'] = 'success'
             threading.Thread(target=self.send_message, args=(ack, host)).start()
-            # self.send_message(ack, host)
 
         elif msg["event"] == "server_status_change":
             if not db.username_hashed_pwd_match_db(msg["username"], msg["hashed_password"]):
@@ -104,7 +98,6 @@ class Manager:
             }
             LOGGER.info("Sending notice to %s", self.buttons[msg["username"]])
             threading.Thread(target=self.send_message, args=(notice, self.buttons[msg["username"]])).start()
-            # self.send_message(notice, self.buttons[msg["username"]])
 
         else:
             LOGGER.info("Invalid message from %s", host)
