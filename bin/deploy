@@ -48,9 +48,8 @@ for arg in "$@"; do
                 mkdir var/log
             fi
             echo "Starting Particle manager ..."
-            tmux new -s managerWindow 
             sudo python3 -m particleManager
-            
+
             ;;
         --flask)
             ;;
