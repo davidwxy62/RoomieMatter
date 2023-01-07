@@ -48,7 +48,7 @@ for arg in "$@"; do
                 mkdir var/log
             fi
             echo "Starting Particle manager ..."
-            sudo python3 -m particleManager --host 172.31.28.171 --port 1002 --logfile var/log/particleManager.log --loglevel debug
+            sudo python3 -m particleManager
             ;;
         --flask)
             ;;
