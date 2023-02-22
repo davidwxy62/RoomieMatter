@@ -56,12 +56,20 @@ class StatusButton extends React.Component {
     render() {
         const { status, name } = this.state;
         return (
-            <div className="col-6">
-                <span className="display-6 self">{name} - </span>
-                <button className="cuteButton mb-2" onClick={() => this.handleClick()}>
-                {status}
-            </button>
-            </div>
+            <div className="container h-100">
+                    <div className="row align-items-center h-100">
+                        <div className="col">
+                            <div className="row mx-auto pt-5">
+                                <div className="col-6 mx-auto">
+                                    <span className="display-6 self">{name} - </span>
+                                    <button className="cuteButton" onClick={() => this.handleClick()}>
+                                        {status}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         );
     }
 }
@@ -158,13 +166,23 @@ class RoomieList extends React.Component {
             return (<p className="roomie">Go get some roomies!</p>);
         }
         return (
-                roomies.map((roomie) => (
-                    <ul>
-                        <li key={roomie.name} className="center roomie fontWeight1000">
-                            <span>{roomie.name} - {roomie.status}</span>
-                        </li>
-                    </ul>
-                ))
+                <div className="container h-100">
+                    <div className="row align-items-center h-100">
+                        <div className="col">
+                            <div className="row mx-auto">
+                                <div className="col-6 mx-auto">
+                                    {roomies.map((roomie) => (
+                                        <ul>
+                                            <li key={roomie.name} className="center roomie fontWeight1000">
+                                                <span>{roomie.name} - {roomie.status}</span>
+                                            </li>
+                                        </ul>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         );
     }
 }
@@ -173,7 +191,6 @@ function IndexPage() {
     return (
         <div>
             <StatusButton url="/api/status" />
-            {/* <p className="main80 top30px">Your Roomies:</p> */}
             <RoomieList url="/api/roomies" />
         </div>
     );
