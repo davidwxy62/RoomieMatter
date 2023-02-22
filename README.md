@@ -1,1 +1,2 @@
-# roomieMatter
+# RoomieMatter
+# roomiematter.com/about
