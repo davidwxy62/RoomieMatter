@@ -20,9 +20,8 @@ class Redirect extends React.Component {
 function Request({name, onAccept, onReject}) {
     return (
         <span>
-            <span className="roomie">{name} - </span>
-            <button className="cuteButton_small" onClick={onAccept}>Accept</button>
-            <span className="roomie"> </span>
+            <span className="display-6 name">{name} - </span>
+            <button className="cuteButton_small" onClick={onAccept}>Accept</button> &nbsp;
             <button className="cuteButton_small" onClick={onReject}>Reject</button>
         </span>
     );

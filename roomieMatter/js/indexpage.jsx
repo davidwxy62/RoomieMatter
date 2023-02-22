@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 class StatusButton extends React.Component {
     constructor(props) {
@@ -56,20 +55,12 @@ class StatusButton extends React.Component {
     render() {
         const { status, name } = this.state;
         return (
-            <div className="container h-100">
-                    <div className="row align-items-center h-100">
-                        <div className="col">
-                            <div className="row mx-auto pt-5">
-                                <div className="col-6 mx-auto">
-                                    <span className="display-6 self">{name} - </span>
-                                    <button className="cuteButton" onClick={() => this.handleClick()}>
-                                        {status}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div>
+                <span className="display-6 name">{name} - </span>
+                <button className="cuteButton" onClick={() => this.handleClick()}>
+                    <span className="rem-2_5">{status}</span>
+                </button>
+            </div>
         );
     }
 }
@@ -163,26 +154,19 @@ class RoomieList extends React.Component {
     render() {
         const { roomies, mounted, last_refresh } = this.state;
         if (roomies.length === 0 && mounted ) {
-            return (<p className="roomie">Go get some roomies!</p>);
+            return (<p className="name mt-5 display-6">Go get some roomies!</p>);
         }
         return (
-                <div className="container h-100">
-                    <div className="row align-items-center h-100">
-                        <div className="col">
-                            <div className="row mx-auto">
-                                <div className="col-6 mx-auto">
-                                    {roomies.map((roomie) => (
-                                        <ul>
-                                            <li key={roomie.name} className="center roomie fontWeight1000">
-                                                <span>{roomie.name} - {roomie.status}</span>
-                                            </li>
-                                        </ul>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div className="mt-5 ">
+                {roomies.map((roomie) => (
+                    <ul>
+                        <li key={roomie.name}>
+                            <span className="display-6 name">{roomie.name}</span>
+                            <span className="display-6 status"> - {roomie.status}</span>
+                        </li>
+                    </ul>
+                ))}
+            </div>
         );
     }
 }
@@ -190,8 +174,16 @@ class RoomieList extends React.Component {
 function IndexPage() {
     return (
         <div>
-            <StatusButton url="/api/status" />
-            <RoomieList url="/api/roomies" />
+            <div className="row mx-auto">
+                <div className="col-6 mx-auto">
+                    <StatusButton url="/api/status" />
+                </div>
+            </div>
+            <div className="row mx-auto">
+                <div className="col-6 mx-auto">
+                    <RoomieList url="/api/roomies" />
+                </div>
+            </div>
         </div>
     );
 }

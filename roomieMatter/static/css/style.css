@@ -96,6 +96,10 @@ opacity: 1;
     border-radius: 8px;
 }
 
+.rem-2_5{
+    font-size: 2.5rem;
+}
+
 .cuteButton:hover{
     background-color: #0099ff;
     color: white;
@@ -119,10 +123,15 @@ opacity: 1;
     font-weight: bolder;
 }
 
-.self {
+.name {
     font-family: avenir;
     color: white;
     font-weight: bolder;
+}
+
+.status {
+    font-family: avenir;
+    color: white;
 }
 
 .text-reg {

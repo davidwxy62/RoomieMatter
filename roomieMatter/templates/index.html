@@ -17,14 +17,18 @@
                         <script type="text/javascript" src="{{ url_for('static', filename='js/bundle.js') }}"></script>
                     </div>
                 </div>
+                <div class= "row mx-auto w-25">
+                    <div class="col">
+                        {% if has_pending_requests %}
+                            <form class="center" action="/viewrequests" method="get" enctype="multipart/form-data" style="margin-top: 30px">
+                                <input class="cuteButton" type="submit" name="view" value="View Join Requests"/>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
             </div>     
         </div>
     </div>
-    {% if has_pending_requests %}
-        <form class="center" action="/viewrequests" method="get" enctype="multipart/form-data" style="margin-top: 30px">
-            <input class="cuteButton" type="submit" name="view" value="View Join Requests"/>
-        </form>
-    {% endif %}
 {% endif %}
 
 {% endblock %}
