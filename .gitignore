@@ -82,10 +82,10 @@ AWS_ENTR_390_9_16_2022.pem
 /cookies.txt
 /particle
 /always_forget.txt
-.DS_Store
 .editorconfig
 roomieMatter/templates/secret.html
 bin/connect
 bin/meow
 particleManager/comm_prot.txt
 notes
+.DS_Store

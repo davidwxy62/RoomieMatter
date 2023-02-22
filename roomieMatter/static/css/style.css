@@ -177,8 +177,8 @@ a {
     text-decoration: none;
 }
 
-#feedback {
-    position: fixed;
+.feedback {
+    /* position: relative; */
     bottom: 0px;
     left: 16px;
     font-size: 18px;
