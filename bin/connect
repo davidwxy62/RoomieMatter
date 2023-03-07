@@ -1,2 +1,0 @@
-#!/bin/bash
-ssh -i AWS_ENTR_390_9_16_2022.pem ubuntu@ec2-18-117-122-69.us-east-2.compute.amazonaws.com
