@@ -89,3 +89,10 @@ bin/meow
 particleManager/comm_prot.txt
 notes
 .DS_Store
+package-lock.json
+package.json
+setup.py
+webpack.config.js
+roomieMatter/static/images
+bin
+data.sql
